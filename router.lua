@@ -7,7 +7,7 @@ function onTick()
     end
     for i=1,4 do
         local packet = to_packet(i * 8 - 7)
-        if packet.proto ~= 0 then
+        if packet.ttl > 0 then
             receive_packet(packet, i)
         end
     end

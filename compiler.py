@@ -11,9 +11,11 @@ from pathlib import Path
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
-LUA_FILES: list[str] = ['queue.lua', 'chacha20.lua', 'router.lua']
+LUA_FILES: list[str] = [
+	'packeting.lua', 'router_arp.lua', 'packet_queue.lua', 'router.lua', 'xorshift.lua', 'wifi_controller.lua'
+]
 COMPILED: list[str] = ['router']
-MICROCONTROLLERS: list[str] = []
+MICROCONTROLLERS: list[str] = ['router']
 
 
 class Lib:
@@ -46,8 +48,7 @@ def escape(text: str) -> str:
 	return text\
 		.replace('&', '&amp;')\
 		.replace('"', '&quot;')\
-		.replace("'", '&apos;')\
-		.replace('{{key}}', getenv('KEY'))
+		.replace("'", '&apos;')
 
 
 def compile_file(text: str) -> str:
