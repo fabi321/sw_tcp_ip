@@ -65,11 +65,10 @@ function to_channels(packet, start_channel)
             .. int_to_byte(packet.ack_nmb, 1)
             .. int_to_byte(packet.proto, 1)
             .. int_to_byte(packet.ttl, 1)
-            .. "\0"
-            .. int_to_byte(packet.base_station, 1)
+            .. "\0\0"
             .. packet.data
     )
     for i=0,7 do
-        sn(start_channel + i, ("f"):unpack(text:sub(i * 4 + 1, i * 4 + 4)))
+        sn(start_channel + i, ()("f"):unpack(text:sub(i * 4 + 1, i * 4 + 4))))
     end
 end

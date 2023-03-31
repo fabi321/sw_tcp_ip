@@ -1,3 +1,5 @@
+require('util')
+
 ---@type number
 dhcp_state = 0
 ---@type string
@@ -22,7 +24,8 @@ function get_address(packet, address)
             seq_nmb = 0,
             ack_nmb = 0,
             proto = 1,
-            ttl = 255
+            ttl = 255,
+            data = nul_data
         }
     elseif dhcp_state >= 1 and dhcp_state < 60 then
         if packet.proto == 1 and packet.dest_addr == "ffff" and packet.src_addr == address then

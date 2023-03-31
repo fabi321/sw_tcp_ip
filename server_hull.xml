@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="server" description="server for tcp/ip" width="3" length="2" id_counter="12" id_counter_node="3" sym0="32766" sym1="32746" sym2="32766" sym4="32766" sym5="32746" sym6="32766" sym8="32766" sym9="32746" sym10="32766" sym12="32766" sym13="32746" sym14="32766">
+	<nodes>
+		<n id="1" component_id="3">
+			<node label="from router" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+		<n id="2" component_id="5">
+			<node label="to router" type="5" description="The input signal to be processed.">
+				<position x="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="12">
+			<node label="activated" mode="1" description="The input signal to be processed.">
+				<position x="2"/>
+			</node>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="6" script="{{server}}">
+					<pos x="1.25" y="-0.25"/>
+					<in1 component_id="11"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="7" i="9">
+					<pos x="2.5" y="-0.5"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="8" i="10">
+					<pos x="2.5" y="-1"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="9" l="address">
+					<pos x="3.75" y="-0.75"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="10" l="dhcp_state">
+					<pos x="3.75" y="-1.25"/>
+					<in1 component_id="8"/>
+				</object>
+			</c>
+			<c type="41">
+				<object id="11" count="1">
+					<pos y="-0.25"/>
+					<inc component_id="3"/>
+					<in1 component_id="12"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="3">
+					<pos x="-1.25"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="5">
+					<pos x="2.5"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c>
+				<object id="12">
+					<pos x="-1.25" y="-0.5"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="6" script="{{server}}">
+				<pos x="1.25" y="-0.25"/>
+				<in1 component_id="11"/>
+			</c0>
+			<c1 id="7" i="9">
+				<pos x="2.5" y="-0.5"/>
+				<in1 component_id="6"/>
+			</c1>
+			<c2 id="8" i="10">
+				<pos x="2.5" y="-1"/>
+				<in1 component_id="6"/>
+			</c2>
+			<c3 id="9" l="address">
+				<pos x="3.75" y="-0.75"/>
+				<in1 component_id="7"/>
+			</c3>
+			<c4 id="10" l="dhcp_state">
+				<pos x="3.75" y="-1.25"/>
+				<in1 component_id="8"/>
+			</c4>
+			<c5 id="11" count="1">
+				<pos y="-0.25"/>
+				<inc component_id="3"/>
+				<in1 component_id="12"/>
+			</c5>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="3">
+				<pos x="-1.25"/>
+			</c0>
+			<c1 id="5">
+				<pos x="2.5"/>
+				<in1 component_id="6"/>
+			</c1>
+			<c2 id="12">
+				<pos x="-1.25" y="-0.5"/>
+			</c2>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
