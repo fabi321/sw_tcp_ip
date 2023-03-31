@@ -1,4 +1,4 @@
----@type table<number, {retry_time: number, packet: Packet}
+---@type table<number, {retry_time: number, packet: Packet, destination: number}
 packet_queue = {}
 ---@type number
 newest_packet = 1
@@ -17,14 +17,32 @@ function receive_packet(packet, direction)
         end
     end
     if stored >= 10 then
-        -- Drop the packet
+        -- Drop the packet if the destination is congested
         return
     end
-    packet_queue[newest_packet] = {
-        retry_time = 0,
-        packet = packet
-    }
-    newest_packet = newest_packet + 1
+    if packet.dest_addr ~= "ffff" then
+        ---@type number
+        local destination = get_direction_for_packet(packet)
+        if destination == -1 then
+            -- Drop the packet if the destination couldn't be found in arp
+            return
+        end
+        packet_queue[newest_packet] = {
+            retry_time = 0,
+            packet = packet,
+            destination = destination
+        }
+        newest_packet = newest_packet + 1
+    else
+        for i=1,4 do
+            packet_queue[newest_packet] = {
+                retry_time = 0,
+                packet = packet,
+                destination = i
+            }
+            newest_packet = newest_packet + 1
+        end
+    end
     if packet.proto == 2 and packet.ack_nmb ~= 0 then
         for k, p in pairs(packet_queue) do
             if (
@@ -49,8 +67,7 @@ end
 ---@return Packet | nil
 function send_packet(direction)
     for k, p in pairs(packet_queue) do
-        local destination = get_direction_for_packet(p.packet)
-        if p.retry_time == 0 and direction == destination then
+        if p.retry_time == 0 and direction == p.destination then
             if p.packet.proto == 2 then
                 p.retry_time = 20
             else

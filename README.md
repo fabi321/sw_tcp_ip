@@ -32,7 +32,7 @@ Each packet can use a total of 8 number channels.
  - Byte 9: TTL
  - Byte 10 - 11: Reserved for future use
 
-Address `ffff` is reserved as broadcast, Address `fffe` is reserved for "DHCP"
+Address `ffff` is reserved as broadcast
 
 
 ### ARP
@@ -50,6 +50,7 @@ Protocol id 2
 If TCP has broadcast as destination, there will be no sequence numbers and acknowledgement numbers
 
  - Works similar to real TCP
+ - retransmits are handled on a hop-by-hop basis
 
 ### ICMP
 
