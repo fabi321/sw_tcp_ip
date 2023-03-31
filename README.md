@@ -32,7 +32,7 @@ Each packet can use a total of 8 number channels.
  - Byte 9: TTL
  - Byte 10 - 11: Reserved for future use
 
-Address ffff is reserved as broadcast, Address fffe is reserved for "DHCP"
+Address `ffff` is reserved as broadcast, Address `fffe` is reserved for "DHCP"
 
 
 ### ARP
