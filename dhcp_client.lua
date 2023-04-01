@@ -27,12 +27,24 @@ function get_address(packet, address)
             ttl = 255,
             data = nul_data
         }
-    elseif dhcp_state >= 1 and dhcp_state < 60 then
+    elseif dhcp_state >= 1 and dhcp_state < 59 then
         if packet.proto == 1 and packet.dest_addr == "ffff" and packet.src_addr == address then
             dhcp_state = 0
         else
             dhcp_state = dhcp_state + 1
         end
+    elseif dhcp_state == 59 then
+        return {
+            src_addr = dhcp_last_address,
+            dest_addr = "ffff",
+            src_port = 0,
+            dest_port = 0,
+            seq_nmb = 0,
+            ack_nmb = 0,
+            proto = 1,
+            ttl = 255,
+            data = nul_data
+        }
     else
         return dhcp_last_address
     end
