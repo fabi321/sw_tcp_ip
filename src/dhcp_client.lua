@@ -1,5 +1,3 @@
-require('util')
-
 ---@type number
 dhcp_state = 0
 ---@type string
