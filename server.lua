@@ -11,7 +11,7 @@ function onTick()
     if dhcp_state < 60 then
         if input.getBool(1) then
             local result = get_address(packet)
-            if type(result) == 'table' then
+            if result then
                 packet_queue[newest_packet] = {
                     retry_time = 0,
                     packet = result,

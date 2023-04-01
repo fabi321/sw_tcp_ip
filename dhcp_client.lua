@@ -7,7 +7,7 @@ dhcp_last_address = "0000"
 
 ---@param packet Packet
 ---@param address string | nil
----@return string | Packet | nil
+---@return Packet | nil
 function get_address(packet, address)
     address = address or dhcp_last_address
     if dhcp_state == 0 then
@@ -46,7 +46,5 @@ function get_address(packet, address)
             ttl = 255,
             data = nul_data
         }
-    else
-        return dhcp_last_address
     end
 end
