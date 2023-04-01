@@ -1,7 +1,5 @@
 .env
-generated_microcontrollers/packet_sniffer.xml
-generated_microcontrollers/router.xml
-generated_microcontrollers/server.xml
+generated_microcontrollers
 .idea
 .vscode
 .venv
