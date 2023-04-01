@@ -35,12 +35,14 @@ function receive_packet(packet, direction)
         newest_packet = newest_packet + 1
     else
         for i=1,4 do
-            packet_queue[newest_packet] = {
-                retry_time = 0,
-                packet = packet,
-                destination = i
-            }
-            newest_packet = newest_packet + 1
+            if i ~= direction then
+                packet_queue[newest_packet] = {
+                    retry_time = 0,
+                    packet = packet,
+                    destination = i
+                }
+                newest_packet = newest_packet + 1
+            end
         end
     end
     if packet.proto == 2 and packet.ack_nmb ~= 0 then
