@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="packet_sniffer" description="sniff tcp/ip packets. remembers the last packet" width="1" length="1" id_counter="21" id_counter_node="1">
+	<nodes>
+		<n id="1" component_id="21">
+			<node label="Input" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="1" script="{{packet_sniffer}}">
+					<pos x="1.25" y="-0.25"/>
+					<in1 component_id="21">
+						<v 10="1" 11="60"/>
+					</in1>
+					<out1>
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</out1>
+				</object>
+			</c>
+			<c type="29">
+				<object id="2">
+					<pos x="2.5"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+					<out1 v="true"/>
+				</object>
+			</c>
+			<c type="44">
+				<object id="3" l="packet received" on="on" off="off">
+					<pos x="3.75"/>
+					<in1 component_id="2" v="true"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="4">
+					<pos x="2.5" y="-0.5"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="5" i="1">
+					<pos x="2.5" y="-0.75"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+					<out1 v="1"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="6" i="2">
+					<pos x="2.5" y="-1"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="7" i="3">
+					<pos x="2.5" y="-1.25"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="8" i="4">
+					<pos x="2.5" y="-1.5"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="9" i="5">
+					<pos x="2.5" y="-1.75"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="10" i="6">
+					<pos x="2.5" y="-2"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+					<out1 v="1"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="11" i="7">
+					<pos x="2.5" y="-2.25"/>
+					<in1 component_id="1">
+						<v bools="1" 02="1" 07="1" 08="255"/>
+					</in1>
+					<out1 v="255"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="12" l="src_addr">
+					<pos x="3.75" y="-0.75"/>
+					<in1 component_id="4"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="13" l="dest_addr">
+					<pos x="3.75" y="-1"/>
+					<in1 component_id="5" v="1"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="14" l="src_port">
+					<pos x="3.75" y="-1.25"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="15" l="dest_port">
+					<pos x="3.75" y="-1.5"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="16" l="seq_nmb">
+					<pos x="3.75" y="-1.75"/>
+					<in1 component_id="8"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="17" l="ack_nmb">
+					<pos x="3.75" y="-2"/>
+					<in1 component_id="9"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="18" l="proto">
+					<pos x="3.75" y="-2.25"/>
+					<in1 component_id="10" v="1"/>
+				</object>
+			</c>
+			<c type="43">
+				<object id="19" l="ttl">
+					<pos x="3.75" y="-2.5"/>
+					<in1 component_id="11" v="255"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="21"/>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="1" script="{{packet_sniffer}}">
+				<pos x="1.25" y="-0.25"/>
+				<in1 component_id="21">
+					<v 10="1" 11="60"/>
+				</in1>
+				<out1>
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</out1>
+			</c0>
+			<c1 id="2">
+				<pos x="2.5"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+				<out1 v="true"/>
+			</c1>
+			<c2 id="3" l="packet received" on="on" off="off">
+				<pos x="3.75"/>
+				<in1 component_id="2" v="true"/>
+			</c2>
+			<c3 id="4">
+				<pos x="2.5" y="-0.5"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+			</c3>
+			<c4 id="5" i="1">
+				<pos x="2.5" y="-0.75"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+				<out1 v="1"/>
+			</c4>
+			<c5 id="6" i="2">
+				<pos x="2.5" y="-1"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+			</c5>
+			<c6 id="7" i="3">
+				<pos x="2.5" y="-1.25"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+			</c6>
+			<c7 id="8" i="4">
+				<pos x="2.5" y="-1.5"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+			</c7>
+			<c8 id="9" i="5">
+				<pos x="2.5" y="-1.75"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+			</c8>
+			<c9 id="10" i="6">
+				<pos x="2.5" y="-2"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+				<out1 v="1"/>
+			</c9>
+			<c10 id="11" i="7">
+				<pos x="2.5" y="-2.25"/>
+				<in1 component_id="1">
+					<v bools="1" 02="1" 07="1" 08="255"/>
+				</in1>
+				<out1 v="255"/>
+			</c10>
+			<c11 id="12" l="src_addr">
+				<pos x="3.75" y="-0.75"/>
+				<in1 component_id="4"/>
+			</c11>
+			<c12 id="13" l="dest_addr">
+				<pos x="3.75" y="-1"/>
+				<in1 component_id="5" v="1"/>
+			</c12>
+			<c13 id="14" l="src_port">
+				<pos x="3.75" y="-1.25"/>
+				<in1 component_id="6"/>
+			</c13>
+			<c14 id="15" l="dest_port">
+				<pos x="3.75" y="-1.5"/>
+				<in1 component_id="7"/>
+			</c14>
+			<c15 id="16" l="seq_nmb">
+				<pos x="3.75" y="-1.75"/>
+				<in1 component_id="8"/>
+			</c15>
+			<c16 id="17" l="ack_nmb">
+				<pos x="3.75" y="-2"/>
+				<in1 component_id="9"/>
+			</c16>
+			<c17 id="18" l="proto">
+				<pos x="3.75" y="-2.25"/>
+				<in1 component_id="10" v="1"/>
+			</c17>
+			<c18 id="19" l="ttl">
+				<pos x="3.75" y="-2.5"/>
+				<in1 component_id="11" v="255"/>
+			</c18>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="21"/>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
