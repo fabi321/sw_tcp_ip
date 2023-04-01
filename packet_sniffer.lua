@@ -18,7 +18,7 @@ function onTick()
         sn(7, packet.proto)
         sn(8, packet.ttl + 1)
         async.httpGet(8080, string.format(
-                "/%s?tick=%i&src_addr=%s&dest_addr=%s&src_port=%i&dest_port=%i&seq_nmb=%i&ack_nmb=%i&proto=%i&ttl=%i",
+                "/%s?tick=%i&src_addr=%s&dest_addr=%s&src_port=%i&dest_port=%i&seq_nmb=%i&ack_nmb=%i&proto=%i&ttl=%i&len=%i&data=%s",
                 label,
                 tick,
                 packet.src_addr,
@@ -28,7 +28,9 @@ function onTick()
                 packet.seq_nmb,
                 packet.ack_nmb,
                 packet.proto,
-                packet.ttl + 1
+                packet.ttl + 1,
+                #packet.data,
+                packet.data
         ))
     end
 end
