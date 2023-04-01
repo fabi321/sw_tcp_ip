@@ -12,7 +12,7 @@ function get_address(packet, address)
     address = address or dhcp_last_address
     if dhcp_state == 0 then
         if dhcp_last_address == address then
-            address = ("%x"):format(tonumber(address, 16) + 1)
+            address = ("%04x"):format((tonumber(address, 16) + 1) % 65535)
         end
         dhcp_last_address = address
         dhcp_state = 1
@@ -28,7 +28,7 @@ function get_address(packet, address)
             data = nul_data
         }
     elseif dhcp_state >= 1 and dhcp_state < 59 then
-        if packet.proto == 1 and packet.dest_addr == "ffff" and packet.src_addr == address then
+        if packet.proto == 1 and packet.src_addr == address then
             dhcp_state = 0
         else
             dhcp_state = dhcp_state + 1
