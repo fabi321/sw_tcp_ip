@@ -16,8 +16,8 @@ function receive_packet(packet, direction)
             stored = stored + 1
         end
     end
-    if stored >= 10 then
-        -- Drop the packet if the destination is congested
+    if stored >= 10 or packet.src_addr == packet.dest_addr then
+        -- Drop the packet if the destination is congested, or the source and destination are equal
         return
     end
     if packet.dest_addr ~= "ffff" then

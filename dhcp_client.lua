@@ -34,6 +34,7 @@ function get_address(packet, address)
             dhcp_state = dhcp_state + 1
         end
     elseif dhcp_state == 59 then
+        dhcp_state = 60
         return {
             src_addr = dhcp_last_address,
             dest_addr = "ffff",
