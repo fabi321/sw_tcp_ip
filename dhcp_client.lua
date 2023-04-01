@@ -24,7 +24,7 @@ function get_address(packet, address)
             seq_nmb = 0,
             ack_nmb = 0,
             proto = 1,
-            ttl = 255,
+            ttl = 63,
             data = address
         }
     elseif dhcp_state >= 1 and dhcp_state < 59 then
@@ -43,7 +43,7 @@ function get_address(packet, address)
             seq_nmb = 0,
             ack_nmb = 0,
             proto = 1,
-            ttl = 255,
+            ttl = 63,
             data = dhcp_last_address
         }
     end

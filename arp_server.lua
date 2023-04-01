@@ -11,7 +11,7 @@ function respond_to_arp(packet, own_address)
             seq_nmb = 0,
             ack_nmb = 0,
             proto = 1,
-            ttl = 255,
+            ttl = 63,
             data = own_address
         }
     end
