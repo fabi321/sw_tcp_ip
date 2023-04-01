@@ -97,6 +97,9 @@ def main():
 	compiled: dict[str, str] = compile()
 	compiled['trusted_mode'] = (getenv('TRUSTED_MODE') or 'true').lower()
 	assert compiled['trusted_mode'] in ('true', 'false'), 'Only true or false are possible settings for TRUSTED_MODE'
+	generated_microcontrollers_dir: Path = Path('generated_microcontrollers')
+	if not generated_microcontrollers_dir.is_dir():
+		generated_microcontrollers_dir.mkdir()
 	for mc_name in MICROCONTROLLERS:
 		process_microcontroller(mc_name, compiled)
 		if do_install:
