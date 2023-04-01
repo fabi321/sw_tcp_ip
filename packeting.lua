@@ -35,6 +35,12 @@ end
 ---@param start_channel number
 ---@return Packet
 function to_packet(start_channel)
+    local data = ("fffff"):pack(
+                gn(start_channel + 3),
+                gn(start_channel + 4),
+                gn(start_channel + 5),
+                gn(start_channel + 6),
+                gn(start_channel + 7))
     return {
         src_addr = ("%04x"):format(byte_to_int(gn(start_channel), 1, 2)),
         dest_addr = ("%04x"):format(byte_to_int(gn(start_channel), 3, 2)),
@@ -44,12 +50,7 @@ function to_packet(start_channel)
         ack_nmb = byte_to_int(gn(start_channel + 1), 4, 1),
         proto = byte_to_int(gn(start_channel + 2), 1, 1),
         ttl = byte_to_int(gn(start_channel + 2), 2, 1) - 1,
-        data = (("fffff"):pack(
-                gn(start_channel + 3),
-                gn(start_channel + 4),
-                gn(start_channel + 5),
-                gn(start_channel + 6),
-                gn(start_channel + 7)))
+        data = data:sub(1, byte_to_int(gn(start_channel + 2), 3, 1))
     }
 end
 
@@ -65,8 +66,9 @@ function to_channels(packet, start_channel)
             .. int_to_byte(packet.ack_nmb, 1)
             .. int_to_byte(packet.proto, 1)
             .. int_to_byte(packet.ttl, 1)
-            .. "\0\0"
-            .. packet.data
+            .. int_to_byte(#packet.data, 1)
+            .. "\0"
+            .. (packet.data .. "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"):sub(1, 20)
     )
     for i=0,7 do
         sn(start_channel + i, (("f"):unpack(text:sub(i * 4 + 1, i * 4 + 4))))

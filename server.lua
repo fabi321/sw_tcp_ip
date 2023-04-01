@@ -12,19 +12,17 @@ function onTick()
         if input.getBool(1) then
             local result = get_address(packet)
             if result then
-                packet_queue[newest_packet] = {
-                    retry_time = 0,
-                    packet = result,
-                    destination = 1,
-                }
-                newest_packet = newest_packet + 1
+                receive_packet(result, 0)
             end
         end
     else
         if packet.ttl > 0 then
             arp_receive_packet(packet, 1)
             if packet.proto == 1 then
-                receive_packet(respond_to_arp(packet, dhcp_last_address), 1)
+                local response = respond_to_arp(packet, dhcp_last_address)
+                if response then
+                    receive_packet(response, 0)
+                end
             end
         end
     end

@@ -30,7 +30,8 @@ Each packet can use a total of 8 number channels.
  - Byte 7: Acknowledgement number
  - Byte 8: Protocol
  - Byte 9: TTL
- - Byte 10 - 11: Reserved for future use
+ - Byte 10: Length (in bytes)
+ - Byte 11: Reserved for future use
 
 Address `ffff` is reserved as broadcast
 
@@ -39,9 +40,14 @@ Address `ffff` is reserved as broadcast
 
 Protocol id 1
 
- - Ignores ports, sequence and acknowledgement numbers
+ - source port used for type
  - Used to prime all switches
  - Used as a crappy DHCP
+
+| Id | Name              |
+|----|-------------------|
+| 1  | Who has <Address> |
+| 2  | I have <Address>  |
 
 ### TCP
 
