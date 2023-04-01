@@ -44,10 +44,10 @@ Protocol id 1
  - Used to prime all switches
  - Used as a crappy DHCP
 
-| Id | Name              |
-|----|-------------------|
-| 1  | Who has <Address> |
-| 2  | I have <Address>  |
+| Id | Name                |
+|----|---------------------|
+| 1  | Who has \<Address\> |
+| 2  | I have \<Address\>  |
 
 ### TCP
 
