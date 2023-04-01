@@ -63,6 +63,7 @@ If TCP has broadcast as destination, there will be no sequence numbers and ackno
 Protocol id 3
 
  - source port used for type
+ - for ping: sequence number is returned as is
 
 | Id | Name         |
 |----|--------------|

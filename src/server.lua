@@ -2,6 +2,8 @@ require('packeting')
 require('packet_queue')
 require('dhcp_client')
 require('arp_server')
+require('icmp_server')
+require('icmp_client')
 
 function onTick()
     for i=1,8 do
@@ -23,6 +25,20 @@ function onTick()
                 if response then
                     receive_packet(response, 0)
                 end
+            elseif packet.proto == 3 then
+                local response = respond_to_icmp(packet, dhcp_last_address)
+                if response then
+                    receive_packet(response, 0)
+                end
+            end
+        end
+        if input.getBool(2) then
+            local destination_address = ("%04x"):format(gn(10))
+            local result = icmp_ping(packet, dhcp_last_address, destination_address)
+            if type(result) == 'table' then
+                receive_packet(result, 0)
+            elseif type(result) == 'number' then
+                sn(11, result)
             end
         end
     end
@@ -35,5 +51,4 @@ function onTick()
         send_packet(i)
     end
     sn(10, tonumber(dhcp_last_address, 16))
-    sn(11, dhcp_state)
 end

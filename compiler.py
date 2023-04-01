@@ -12,8 +12,8 @@ from pathlib import Path
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
 LUA_FILES: list[str] = [
-	'packeting.lua', 'router_arp.lua', 'packet_queue.lua', 'router.lua', 'xorshift.lua',
-	'wifi_controller.lua', 'dhcp_client.lua', 'arp_server.lua', 'server.lua', 'packet_sniffer.lua'
+	'packeting.lua', 'router_arp.lua', 'packet_queue.lua', 'router.lua', 'xorshift.lua', 'icmp_server.lua',
+	'wifi_controller.lua', 'dhcp_client.lua', 'arp_server.lua', 'icmp_client.lua', 'server.lua', 'packet_sniffer.lua'
 ]
 COMPILED: list[str] = ['router', 'server', 'packet_sniffer']
 MICROCONTROLLERS: list[str] = ['router', 'server', 'packet_sniffer']
