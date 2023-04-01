@@ -32,7 +32,7 @@ class Lib:
 		self.snippets[name] = snippet
 
 	def add_from_file(self, filename: str):
-		with open(filename) as f:
+		with open(Path('src') / filename) as f:
 			self.add_and_resolve_snippet(filename.split('.')[0], f.read())
 
 
@@ -67,14 +67,14 @@ def compile() -> dict[str, str]:
 
 
 def process_microcontroller(name: str, compiled: dict[str, str]):
-	with open(f'{name}_hull.xml') as f:
+	with (Path('microcontroller_hulls') / f'{name}.xml').open() as f:
 		hull: str = f.read()
 	while match := TEMPLATE_REGEX.search(hull):
 		required_snippet: Optional[str] = compiled.get(match.group(1))
 		if not required_snippet:
 			raise ModuleNotFoundError(f'Could not find snippet {match.group(1)}')
 		hull = hull[:match.start()] + required_snippet + hull[match.end():]
-	with open(f'{name}.xml', 'w') as f:
+	with (Path('generated_microcontrollers') / f'{name}.xml').open('w') as f:
 		f.write(hull)
 
 
@@ -87,8 +87,8 @@ def install(name: str):
 	else:
 		raise NotImplementedError('Apple is not supported atm')
 	copy_dir = copy_dir / 'Stormworks' / 'data' / 'microprocessors'
-	shutil.copy(f'{name}.xml', copy_dir)
-	shutil.copy(f'{name}.png', copy_dir)
+	shutil.copy(Path('generated_microcontrollers') / f'{name}.xml', copy_dir)
+	shutil.copy(Path('microcontroller_thumbnails') / f'{name}.png', copy_dir)
 
 
 def main():
