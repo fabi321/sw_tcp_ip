@@ -32,7 +32,6 @@ function onTick()
     packet = send_packet(1)
     if packet ~= nil then
         to_channels(packet, 1)
-        sn(12, 1)
     end
     sn(10,tonumber(dhcp_last_address, 16))
     sn(11, dhcp_state)

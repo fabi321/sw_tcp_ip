@@ -49,7 +49,7 @@ def escape(text: str) -> str:
 	return text\
 		.replace('&', '&amp;')\
 		.replace('"', '&quot;')\
-		.replace("'", '&apos;').replace(' ', '\n')
+		.replace("'", '&apos;')
 
 
 def compile_file(text: str) -> str:
