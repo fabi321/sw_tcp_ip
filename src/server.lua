@@ -8,6 +8,7 @@ function onTick()
         sn(i, 0)
     end
     local packet = to_packet(1)
+    arp_receive_packet(packet, 1)
     if dhcp_state < 60 then
         if input.getBool(1) then
             local result = get_address(packet)
@@ -17,7 +18,6 @@ function onTick()
         end
     else
         if packet.ttl > 0 then
-            arp_receive_packet(packet, 1)
             if packet.proto == 1 then
                 local response = respond_to_arp(packet, dhcp_last_address)
                 if response then

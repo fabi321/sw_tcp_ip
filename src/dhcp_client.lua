@@ -1,18 +1,16 @@
 ---@type number
 dhcp_state = 0
 ---@type string
-dhcp_last_address = "00ff"
+dhcp_last_address = "0100"
 
 ---@param packet Packet
 ---@param address string | nil
 ---@return Packet | nil
 function get_address(packet, address)
-    address = address or dhcp_last_address
-    if dhcp_state == 0 then
-        if dhcp_last_address == address then
-            address = ("%04x"):format((tonumber(address, 16) + 1) % 65535)
-        end
+    if address and dhcp_last_address == "0100" then
         dhcp_last_address = address
+    end
+    if dhcp_state == 0 then
         dhcp_state = 1
         return {
             src_addr = "ffff",
@@ -23,10 +21,13 @@ function get_address(packet, address)
             ack_nmb = 0,
             proto = 1,
             ttl = 63,
-            data = address
+            data = dhcp_last_address
         }
     elseif dhcp_state >= 1 and dhcp_state < 59 then
-        if packet.proto == 1 and packet.src_addr == address and packet.src_port == 2 then
+        if packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
+            while address_cache[dhcp_last_address] do
+                dhcp_last_address = ("%04x"):format((tonumber(dhcp_last_address, 16) + 1) % 65535)
+            end
             dhcp_state = 0
         else
             dhcp_state = dhcp_state + 1
