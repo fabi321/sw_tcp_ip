@@ -1,4 +1,4 @@
----@type table<number, {retry_time: number, packet: Packet, destination: number}
+---@type table<number, {retry_time: number, retry_count: number, packet: Packet, destination: number}
 packet_queue = {}
 ---@type number
 newest_packet = 1
@@ -29,6 +29,7 @@ function receive_packet(packet, direction)
         end
         packet_queue[newest_packet] = {
             retry_time = 0,
+            retry_count = 0,
             packet = packet,
             destination = destination
         }
@@ -38,6 +39,7 @@ function receive_packet(packet, direction)
             if i ~= direction then
                 packet_queue[newest_packet] = {
                     retry_time = 0,
+                    retry_count = 0,
                     packet = packet,
                     destination = i
                 }
@@ -72,6 +74,10 @@ function send_packet(direction)
         if p.retry_time == 0 and direction == p.destination then
             if p.packet.proto == 2 then
                 p.retry_time = 20
+                p.retry_count = p.retry_count + 1
+                if p.retry_count >= 5 then
+                    packet_queue[k] = nil
+                end
             else
                 packet_queue[k] = nil
             end
