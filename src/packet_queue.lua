@@ -28,7 +28,7 @@ function receive_packet(packet, direction)
             -- Drop the packet if the destination couldn't be found in arp
             return
         end
-        packet_queue[newest_packet] = {
+        packet_queue[newest_packet] = --[[---@type {retry_time: number, retry_count: number, packet: Packet, destination: number}]] {
             retry_time = 0,
             retry_count = 0,
             packet = packet,

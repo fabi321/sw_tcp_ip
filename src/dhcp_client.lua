@@ -13,7 +13,7 @@ function get_address(packet, address)
     end
     if dhcp_state == 0 then
         dhcp_state = 1
-        receive_packet({
+        receive_packet(--[[---@type Packet]] {
             src_addr = "ffff",
             dest_addr = "ffff",
             src_port = 1,
@@ -47,7 +47,7 @@ end
 ---@param seq_nmb number | nil
 ---@param ack_nmb number | nil
 function send_own_packet(dest_addr, proto, data, src_port, dest_port, seq_nmb, ack_nmb)
-    receive_packet({
+    receive_packet(--[[---@type Packet]] {
             src_addr = dhcp_last_address,
             dest_addr = dest_addr,
             src_port = src_port or 0,

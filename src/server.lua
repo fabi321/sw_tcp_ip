@@ -18,10 +18,7 @@ function onTick()
     else
         if packet.ttl > 0 then
             if packet.proto == 1 then
-                local response = respond_to_arp(packet, dhcp_last_address)
-                if response then
-                    receive_packet(response, 0)
-                end
+                respond_to_arp(packet)
             elseif packet.proto == 3 then
                 respond_to_icmp(packet)
             end

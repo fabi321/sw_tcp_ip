@@ -41,7 +41,7 @@ function to_packet(start_channel)
                 gn(start_channel + 5),
                 gn(start_channel + 6),
                 gn(start_channel + 7))
-    return {
+    return --[[---@type Packet]] {
         src_addr = ("%04x"):format(byte_to_int(gn(start_channel), 1, 2)),
         dest_addr = ("%04x"):format(byte_to_int(gn(start_channel), 3, 2)),
         src_port = byte_to_int(gn(start_channel + 1), 1, 1),
