@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="wifi_ap" description="No description set." width="3" length="3" id_counter="29" id_counter_node="9" sym1="65535" sym2="65535" sym3="32766" sym4="32766" sym5="16380" sym6="16380" sym7="4104" sym8="4104" sym9="4104" sym10="4104" sym11="4104" sym12="4104" sym13="4104" sym14="4104">
+	<nodes>
+		<n id="1" component_id="7">
+			<node label="router in" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+		<n id="2" component_id="10">
+			<node label="router out" type="5" description="The input signal to be processed.">
+				<position z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="13">
+			<node label="receiving antenna" mode="1" type="5" description="The input signal to be processed.">
+				<position x="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="15">
+			<node label="sending antenna" type="5" description="The input signal to be processed.">
+				<position x="1" z="1"/>
+			</node>
+		</n>
+		<n id="5" component_id="16">
+			<node label="rand source" mode="1" type="1" description="The input signal to be processed.">
+				<position x="2"/>
+			</node>
+		</n>
+		<n id="6" component_id="17">
+			<node label="send" description="The input signal to be processed.">
+				<position x="2" z="1"/>
+			</node>
+		</n>
+		<n id="7" component_id="23">
+			<node label="sync connector" type="5" description="The input signal to be processed.">
+				<position z="2"/>
+			</node>
+		</n>
+		<n id="8" component_id="21">
+			<node label="receiving frequency" type="1" description="The input signal to be processed.">
+				<position x="1" z="2"/>
+			</node>
+		</n>
+		<n id="9" component_id="20">
+			<node label="sending frequency" type="1" description="The input signal to be processed.">
+				<position x="2" z="2"/>
+			</node>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="24" script="{{wifi_ap}}">
+					<pos x="0.5" y="-1.25"/>
+					<in1 component_id="25"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="25" count="1" offset="9">
+					<pos x="-0.75" y="-1.25"/>
+					<in1 component_id="16"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="26" script="function onTick()
+	output.setNumber(10, input.getNumber(10))
+	output.setNumber(11, input.getNumber(11))
+	output.setBool(10, true)
+end
+">
+					<pos x="1.75" y="-1.25"/>
+					<in1 component_id="24"/>
+				</object>
+			</c>
+			<c type="16">
+				<object id="27">
+					<pos x="1.75" y="-0.5"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="28" i="19">
+					<pos x="1.75" y="-1.75"/>
+					<in1 component_id="24"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="29" i="20">
+					<pos x="1.75" y="-2.25"/>
+					<in1 component_id="24"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="7">
+					<pos x="-2" y="-0.5"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="10">
+					<pos x="-0.75"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="13">
+					<pos x="-2"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="15">
+					<pos x="-0.75" y="-0.5"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="16">
+					<pos x="-2" y="-1.25"/>
+				</object>
+			</c>
+			<c type="1">
+				<object id="17">
+					<pos x="3" y="-0.5"/>
+					<in1 component_id="27"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="20">
+					<pos x="3" y="-1.75"/>
+					<in1 component_id="28"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="21">
+					<pos x="3" y="-2.25"/>
+					<in1 component_id="29"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="23">
+					<pos x="3" y="-1"/>
+					<in1 component_id="26"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="24" script="{{wifi_ap}}">
+				<pos x="0.5" y="-1.25"/>
+				<in1 component_id="25"/>
+			</c0>
+			<c1 id="25" count="1" offset="9">
+				<pos x="-0.75" y="-1.25"/>
+				<in1 component_id="16"/>
+			</c1>
+			<c2 id="26" script="function onTick()
+	output.setNumber(10, input.getNumber(10))
+	output.setNumber(11, input.getNumber(11))
+	output.setBool(10, true)
+end
+">
+				<pos x="1.75" y="-1.25"/>
+				<in1 component_id="24"/>
+			</c2>
+			<c3 id="27">
+				<pos x="1.75" y="-0.5"/>
+			</c3>
+			<c4 id="28" i="19">
+				<pos x="1.75" y="-1.75"/>
+				<in1 component_id="24"/>
+			</c4>
+			<c5 id="29" i="20">
+				<pos x="1.75" y="-2.25"/>
+				<in1 component_id="24"/>
+			</c5>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="7">
+				<pos x="-2" y="-0.5"/>
+			</c0>
+			<c1 id="10">
+				<pos x="-0.75"/>
+				<in1 component_id="13"/>
+			</c1>
+			<c2 id="13">
+				<pos x="-2"/>
+			</c2>
+			<c3 id="15">
+				<pos x="-0.75" y="-0.5"/>
+				<in1 component_id="7"/>
+			</c3>
+			<c4 id="16">
+				<pos x="-2" y="-1.25"/>
+			</c4>
+			<c5 id="17">
+				<pos x="3" y="-0.5"/>
+				<in1 component_id="27"/>
+			</c5>
+			<c6 id="20">
+				<pos x="3" y="-1.75"/>
+				<in1 component_id="28"/>
+			</c6>
+			<c7 id="21">
+				<pos x="3" y="-2.25"/>
+				<in1 component_id="29"/>
+			</c7>
+			<c8 id="23">
+				<pos x="3" y="-1"/>
+				<in1 component_id="26"/>
+			</c8>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

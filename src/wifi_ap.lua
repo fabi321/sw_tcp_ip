@@ -1,7 +1,7 @@
 i=input;o=output
 gn=i.getNumber;gb=i.getBool;sn=o.setNumber;sb=o.setBool
 
-require('xorshift')
+require('wifi_frequency_core')
 
 ---@param f number
 ---@returns number
@@ -26,17 +26,14 @@ function onTick()
         if rand_source ~= 0 then
             xorshift:seed(f_to_i(rand_source))
             xorshift:skip()
-            secret = xorshift:next_int()
+            secret = xorshift:next_int()  & 0x7fffff
         end
     else
         tick = tick + 1
         sn(10, tick)
         sn(11, secret)
-        xorshift:seed(tick ~ secret)
-        xorshift:skip()
-        sn(20, xorshift:next_int() & 0x7fffff)
-        xorshift:skip()
-        sn(21, xorshift:next_int() & 0x7fffff)
+        freq_1, freq_2 = get_frequencies(tick, secret)
+        sn(20, freq_1)
+        sn(21, freq_2)
     end
 end
-

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="wifi_receiver" description="No description set." width="3" length="3" id_counter="36" id_counter_node="9" sym1="14798" sym2="14798" sym3="14798" sym4="14798" sym5="14798" sym6="14784" sym7="14784" sym8="14784" sym9="14784" sym10="14336" sym11="14336" sym12="14336" sym13="14336">
+	<nodes>
+		<n id="1" component_id="7">
+			<node label="router in" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+		<n id="2" component_id="10">
+			<node label="router out" type="5" description="The input signal to be processed.">
+				<position z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="13">
+			<node label="receiving antenna" mode="1" type="5" description="The input signal to be processed.">
+				<position x="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="15">
+			<node label="sending antenna" type="5" description="The input signal to be processed.">
+				<position x="1" z="1"/>
+			</node>
+		</n>
+		<n id="6" component_id="17">
+			<node label="send" description="The input signal to be processed.">
+				<position x="2" z="1"/>
+			</node>
+		</n>
+		<n id="7" component_id="35">
+			<node label="sync connector" mode="1" type="5" description="The input signal to be processed.">
+				<position z="2"/>
+			</node>
+		</n>
+		<n id="8" component_id="21">
+			<node label="receiving frequency" type="1" description="The input signal to be processed.">
+				<position x="1" z="2"/>
+			</node>
+		</n>
+		<n id="9" component_id="20">
+			<node label="sending frequency" type="1" description="The input signal to be processed.">
+				<position x="2" z="2"/>
+			</node>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="24" script="{{wifi_receiver}}">
+					<pos x="0.5" y="-1.25"/>
+					<in1 component_id="35"/>
+					<out1>
+						<v 20="3045570" 21="3135651"/>
+					</out1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="28" i="19">
+					<pos x="1.75" y="-1"/>
+					<in1 component_id="24">
+						<v 20="2084535" 21="5022408"/>
+					</in1>
+					<out1 v="2084535"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="29" i="20">
+					<pos x="1.75" y="-1.5"/>
+					<in1 component_id="24">
+						<v 20="2084535" 21="5022408"/>
+					</in1>
+					<out1 v="5022408"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="31" script="{{packet_detector}}">
+					<pos x="-0.75" y="-0.25"/>
+					<in1 component_id="7">
+						<v 10="16003" 11="30"/>
+					</in1>
+				</object>
+			</c>
+			<c type="29">
+				<object id="32">
+					<pos x="0.5"/>
+					<in1 component_id="31"/>
+				</object>
+			</c>
+			<c type="41">
+				<object id="33" count="1">
+					<pos x="-0.75" y="-0.75"/>
+					<inc component_id="7">
+						<v 10="16003" 11="30"/>
+					</inc>
+					<out1>
+						<v 10="16003" 11="30"/>
+					</out1>
+				</object>
+			</c>
+			<c type="41">
+				<object id="34" count="1">
+					<pos x="0.5" y="-0.75"/>
+					<inc component_id="33">
+						<v 10="16003" 11="30"/>
+					</inc>
+					<out1>
+						<v 10="16003" 11="30"/>
+					</out1>
+				</object>
+			</c>
+			<c type="41">
+				<object id="36" count="1">
+					<pos x="1.75" y="-0.75"/>
+					<inc component_id="34">
+						<v 10="16003" 11="30"/>
+					</inc>
+					<out1>
+						<v 10="16003" 11="30"/>
+					</out1>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="7">
+					<pos x="-2" y="-0.5"/>
+					<in1>
+						<v 10="16003" 11="30"/>
+					</in1>
+					<out1>
+						<v 10="16003" 11="30"/>
+					</out1>
+				</object>
+			</c>
+			<c type="5">
+				<object id="10">
+					<pos x="-0.75" y="0.5"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="13">
+					<pos x="-2" y="0.5"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="15">
+					<pos x="3" y="-0.5"/>
+					<in1 component_id="36">
+						<v 10="16003" 11="30"/>
+					</in1>
+					<out1>
+						<v 10="16003" 11="30"/>
+					</out1>
+				</object>
+			</c>
+			<c type="1">
+				<object id="17">
+					<pos x="1.75"/>
+					<in1 component_id="32"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="20">
+					<pos x="3" y="-1"/>
+					<in1 component_id="28" v="2084535"/>
+					<out1 v="2084535"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="21">
+					<pos x="3" y="-1.5"/>
+					<in1 component_id="29" v="5022408"/>
+					<out1 v="5022408"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="35">
+					<pos x="-2" y="-1"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="24" script="{{wifi_receiver}}">
+				<pos x="0.5" y="-1.25"/>
+				<in1 component_id="35"/>
+				<out1>
+					<v 20="3045570" 21="3135651"/>
+				</out1>
+			</c0>
+			<c1 id="28" i="19">
+				<pos x="1.75" y="-1"/>
+				<in1 component_id="24">
+					<v 20="2084535" 21="5022408"/>
+				</in1>
+				<out1 v="2084535"/>
+			</c1>
+			<c2 id="29" i="20">
+				<pos x="1.75" y="-1.5"/>
+				<in1 component_id="24">
+					<v 20="2084535" 21="5022408"/>
+				</in1>
+				<out1 v="5022408"/>
+			</c2>
+			<c3 id="31" script="{{packet_detector}}">
+				<pos x="-0.75" y="-0.25"/>
+				<in1 component_id="7">
+					<v 10="16003" 11="30"/>
+				</in1>
+			</c3>
+			<c4 id="32">
+				<pos x="0.5"/>
+				<in1 component_id="31"/>
+			</c4>
+			<c5 id="33" count="1">
+				<pos x="-0.75" y="-0.75"/>
+				<inc component_id="7">
+					<v 10="16003" 11="30"/>
+				</inc>
+				<out1>
+					<v 10="16003" 11="30"/>
+				</out1>
+			</c5>
+			<c6 id="34" count="1">
+				<pos x="0.5" y="-0.75"/>
+				<inc component_id="33">
+					<v 10="16003" 11="30"/>
+				</inc>
+				<out1>
+					<v 10="16003" 11="30"/>
+				</out1>
+			</c6>
+			<c7 id="36" count="1">
+				<pos x="1.75" y="-0.75"/>
+				<inc component_id="34">
+					<v 10="16003" 11="30"/>
+				</inc>
+				<out1>
+					<v 10="16003" 11="30"/>
+				</out1>
+			</c7>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="7">
+				<pos x="-2" y="-0.5"/>
+				<in1>
+					<v 10="16003" 11="30"/>
+				</in1>
+				<out1>
+					<v 10="16003" 11="30"/>
+				</out1>
+			</c0>
+			<c1 id="10">
+				<pos x="-0.75" y="0.5"/>
+				<in1 component_id="13"/>
+			</c1>
+			<c2 id="13">
+				<pos x="-2" y="0.5"/>
+			</c2>
+			<c3 id="15">
+				<pos x="3" y="-0.5"/>
+				<in1 component_id="36">
+					<v 10="16003" 11="30"/>
+				</in1>
+				<out1>
+					<v 10="16003" 11="30"/>
+				</out1>
+			</c3>
+			<c4 id="17">
+				<pos x="1.75"/>
+				<in1 component_id="32"/>
+			</c4>
+			<c5 id="20">
+				<pos x="3" y="-1"/>
+				<in1 component_id="28" v="2084535"/>
+				<out1 v="2084535"/>
+			</c5>
+			<c6 id="21">
+				<pos x="3" y="-1.5"/>
+				<in1 component_id="29" v="5022408"/>
+				<out1 v="5022408"/>
+			</c6>
+			<c7 id="35">
+				<pos x="-2" y="-1"/>
+			</c7>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
