@@ -70,3 +70,13 @@ Protocol id 3
 | 0  | Ping reply   |
 | 1  | Ping request |
 
+### DNS
+
+Protocol id 4
+ - source port used for type/request/response
+
+| Id | Name                             | Notes                                                          |
+|----|----------------------------------|----------------------------------------------------------------|
+| 0  | what is the address for {name}   |                                                                |
+| 1  | the address for ... is {address} | Name is not referred again. need to remember the sequence id   |
+| 2  | I want to register {name}        | The address that name is to be registered to is the {src_addr} |
