@@ -1,10 +1,11 @@
+require('packet_queue')
+require('dhcp_client')
+
 ---@param packet Packet
----@param own_address string
----@return Packet | nil
-function respond_to_arp(packet, own_address)
-    if packet.src_port == 1 and packet.data == own_address then
-        return {
-            src_addr = own_address,
+function respond_to_arp(packet)
+    if packet.src_port == 1 and packet.data == dhcp_last_address then
+        receive_packet({
+            src_addr = dhcp_last_address,
             dest_addr = packet.src_addr,
             src_port = 2,
             dest_port = 0,
@@ -12,7 +13,7 @@ function respond_to_arp(packet, own_address)
             ack_nmb = 0,
             proto = 1,
             ttl = 63,
-            data = own_address
-        }
+            data = dhcp_last_address
+        }, 0)
     end
 end

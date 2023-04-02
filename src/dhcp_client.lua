@@ -1,3 +1,5 @@
+require('packet_queue')
+
 ---@type number
 dhcp_state = 0
 ---@type string
@@ -5,14 +7,13 @@ dhcp_last_address = "0100"
 
 ---@param packet Packet
 ---@param address string | nil
----@return Packet | nil
 function get_address(packet, address)
     if address and dhcp_last_address == "0100" then
         dhcp_last_address = address
     end
     if dhcp_state == 0 then
         dhcp_state = 1
-        return {
+        receive_packet({
             src_addr = "ffff",
             dest_addr = "ffff",
             src_port = 1,
@@ -22,7 +23,7 @@ function get_address(packet, address)
             proto = 1,
             ttl = 63,
             data = dhcp_last_address
-        }
+        }, 0)
     elseif dhcp_state >= 1 and dhcp_state < 59 then
         if packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
             while address_cache[dhcp_last_address] do
@@ -34,7 +35,7 @@ function get_address(packet, address)
         end
     elseif dhcp_state == 59 then
         dhcp_state = 60
-        return {
+        receive_packet({
             src_addr = dhcp_last_address,
             dest_addr = "ffff",
             src_port = 2,
@@ -44,6 +45,6 @@ function get_address(packet, address)
             proto = 1,
             ttl = 63,
             data = dhcp_last_address
-        }
+        }, 0)
     end
 end

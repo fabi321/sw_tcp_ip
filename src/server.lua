@@ -13,10 +13,7 @@ function onTick()
     arp_receive_packet(packet, 1)
     if dhcp_state < 60 then
         if input.getBool(1) then
-            local result = get_address(packet)
-            if result then
-                receive_packet(result, 0)
-            end
+            get_address(packet)
         end
     else
         if packet.ttl > 0 then
@@ -26,18 +23,13 @@ function onTick()
                     receive_packet(response, 0)
                 end
             elseif packet.proto == 3 then
-                local response = respond_to_icmp(packet, dhcp_last_address)
-                if response then
-                    receive_packet(response, 0)
-                end
+                respond_to_icmp(packet)
             end
         end
         if input.getBool(2) then
             local destination_address = ("%04x"):format(gn(10))
-            local result = icmp_ping(packet, dhcp_last_address, destination_address)
-            if type(result) == 'table' then
-                receive_packet(result, 0)
-            elseif type(result) == 'number' then
+            local result = icmp_ping(packet, destination_address)
+            if result then
                 sn(11, result)
             end
         end
