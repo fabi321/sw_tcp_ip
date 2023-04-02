@@ -1,4 +1,3 @@
-import json
 import os
 from subprocess import Popen, PIPE
 from dotenv import load_dotenv
