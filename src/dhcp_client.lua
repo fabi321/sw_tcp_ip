@@ -1,21 +1,22 @@
+require('util')
 require('packet_queue')
 
 ---@type number
 dhcp_state = 0
 ---@type string
-dhcp_last_address = "0100"
+dhcp_last_address = broadcast_address
 
 ---@param packet Packet
 ---@param address string | nil
 function get_address(packet, address)
-    if address and dhcp_last_address == "0100" then
+    if address and dhcp_last_address == broadcast_address then
         dhcp_last_address = address
     end
     if dhcp_state == 0 then
         dhcp_state = 1
         receive_packet(--[[---@type Packet]] {
-            src_addr = "ffff",
-            dest_addr = "ffff",
+            src_addr = broadcast_address,
+            dest_addr = broadcast_address,
             src_port = 1,
             dest_port = 0,
             seq_nmb = 0,
@@ -35,7 +36,7 @@ function get_address(packet, address)
         end
     elseif dhcp_state == 59 then
         dhcp_state = 60
-        send_own_packet("ffff", 1, dhcp_last_address, 2)
+        send_own_packet(broadcast_address, 1, dhcp_last_address, 2)
     end
 end
 

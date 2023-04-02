@@ -1,10 +1,11 @@
+require('util')
+require('router_arp')
+require('packeting')
+
 ---@type table<number, {retry_time: number, retry_count: number, packet: Packet, destination: number}
 packet_queue = {}
 ---@type number
 newest_packet = 1
-
-require('router_arp')
-require('packeting')
 
 ---@param packet Packet
 ---@param direction number
@@ -21,7 +22,7 @@ function receive_packet(packet, direction)
         -- Drop the packet if the destination is congested
         return
     end
-    if packet.dest_addr ~= "ffff" then
+    if packet.dest_addr ~= broadcast_address then
         ---@type number
         local destination = get_direction_for_packet(packet)
         if destination == -1 then
