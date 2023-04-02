@@ -10,7 +10,6 @@ from pathlib import Path
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
-MICROCONTROLLERS: list[str] = ['router', 'server', 'packet_sniffer']
 
 
 class Snippet:
