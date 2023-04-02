@@ -74,6 +74,7 @@ Protocol id 3
 
 Protocol id 4
  - source port used for type/request/response
+ - Names are limited to 20 characters. There are no domains available
 
 | Id | Name                             | Notes                                                          |
 |----|----------------------------------|----------------------------------------------------------------|
