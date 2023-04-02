@@ -6,11 +6,24 @@ dhcp_state = 0
 ---@type string
 dhcp_last_address = broadcast_address
 
+---@param address_supplied boolean
+function get_new_address(address_supplied)
+    while address_cache[dhcp_last_address] or dhcp_last_address == broadcast_address do
+        local new_int_address = math.random(4096, 65534)
+        if address_supplied then
+            new_int_address = (tonumber(dhcp_last_address, 16) + 1) % 65535
+        end
+        dhcp_last_address = ("%04x"):format(new_int_address)
+    end
+end
+
 ---@param packet Packet
 ---@param address string | nil
 function get_address(packet, address)
     if address and dhcp_last_address == broadcast_address then
         dhcp_last_address = address
+    elseif dhcp_last_address == broadcast_address then
+        get_new_address(false)
     end
     if dhcp_state == 0 then
         dhcp_state = 1
@@ -27,9 +40,7 @@ function get_address(packet, address)
         }, 0)
     elseif dhcp_state >= 1 and dhcp_state < 59 then
         if packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
-            while address_cache[dhcp_last_address] do
-                dhcp_last_address = ("%04x"):format((tonumber(dhcp_last_address, 16) + 1) % 65535)
-            end
+            get_new_address(address ~= nil)
             dhcp_state = 0
         else
             dhcp_state = dhcp_state + 1

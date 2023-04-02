@@ -33,7 +33,9 @@ Each packet can use a total of 8 number channels.
  - Byte 10: Length (in bytes)
  - Byte 11: Reserved for future use
 
-Address `ffff` is reserved as broadcast
+Address `ffff` is reserved as broadcast.
+Address `0000` is preferably used for the DNS server, but not technically restricted to it.
+DHCP will only assign addresses between (including) `1000` and `fffe`.
 
 
 ### ARP
