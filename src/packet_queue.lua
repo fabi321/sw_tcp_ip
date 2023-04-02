@@ -4,6 +4,7 @@ packet_queue = {}
 newest_packet = 1
 
 require('router_arp')
+require('packeting')
 
 ---@param packet Packet
 ---@param direction number

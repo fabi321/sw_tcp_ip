@@ -11,29 +11,13 @@ from pathlib import Path
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
-LUA_FILES: list[str] = [
-	'packeting.lua', 'router_arp.lua', 'packet_queue.lua', 'router.lua', 'xorshift.lua', 'icmp_server.lua',
-	'wifi_controller.lua', 'dhcp_client.lua', 'arp_server.lua', 'icmp_client.lua', 'server.lua', 'packet_sniffer.lua'
-]
-COMPILED: list[str] = ['router', 'server', 'packet_sniffer']
 MICROCONTROLLERS: list[str] = ['router', 'server', 'packet_sniffer']
 
 
-class Lib:
-	def __init__(self):
-		self.snippets: dict[str, str] = {}
-
-	def add_and_resolve_snippet(self, name: str, snippet: str):
-		while match := REQUIRE_REGEX.search(snippet):
-			required_snippet: Optional[str] = self.snippets.get(match.group(1))
-			if not required_snippet:
-				raise ModuleNotFoundError(f'Could not find snippet {match.group(1)}')
-			snippet = snippet[:match.start()] + required_snippet + snippet[match.end() + 1:]
-		self.snippets[name] = snippet
-
-	def add_from_file(self, filename: str):
-		with open(Path('src') / filename) as f:
-			self.add_and_resolve_snippet(filename.split('.')[0], f.read())
+class Snippet:
+	def __init__(self, content: str):
+		self.content: str = content
+		self.dependencies: set = set(REQUIRE_REGEX.findall(self.content))
 
 
 def minify(text: str) -> str:
@@ -52,7 +36,50 @@ def escape(text: str) -> str:
 		.replace("'", '&apos;')
 
 
-def compile_file(text: str) -> str:
+def get_mro(snippets: dict[str, Snippet], name: str) -> list[str]:
+	visited = set()
+	mro = []
+
+	def dfs(current_name):
+		visited.add(current_name)
+		snippet = snippets[current_name]
+
+		for dep_name in snippet.dependencies:
+			if dep_name not in visited:
+				dfs(dep_name)
+
+		mro.append(current_name)
+
+	dfs(name)
+	return mro
+
+
+def merge_snippets(snippets: dict[str, Snippet], name: str) -> str:
+	# compute MRO
+	mro = get_mro(snippets, name)
+
+	# merge snippets in MRO order
+	merged_content = ""
+	merged_deps = set()
+	for current_name in mro:
+		snippet = snippets[current_name]
+		for dep_name in snippet.dependencies:
+			replace_with: str = ''
+			if dep_name not in merged_deps:
+				replace_with = snippets[dep_name].content
+				merged_deps.add(dep_name)
+			merged_content = re.sub(f'require\\(["\']{dep_name}["\']\\)', replace_with, merged_content)
+		merged_content += snippet.content
+
+	# replace remaining dependencies with empty string
+	for dep_name in merged_deps:
+		merged_content = re.sub(f'require\\(["\']{dep_name}["\']\\)', '', merged_content)
+
+	return merged_content
+
+
+def compile_file(snippets: dict[str, Snippet], name: str) -> str:
+	text: str = merge_snippets(snippets, name)
 	text = minify(text)
 	assert len(text) <= 4096, 'script is too long'
 	text = escape(text)
@@ -60,25 +87,29 @@ def compile_file(text: str) -> str:
 
 
 def compile() -> dict[str, str]:
-	lib: Lib = Lib()
-	for file in LUA_FILES:
-		lib.add_from_file(file)
-	return {name: compile_file(lib.snippets[name]) for name in COMPILED}
+	snippets: dict[str, Snippet] = {}
+	for file in Path('src').iterdir():
+		if not file.is_file():
+			# Ignores directories for now
+			continue
+		with file.open() as f:
+			snippets[file.stem] = Snippet(f.read())
+	return {name: compile_file(snippets, name) for name in snippets.keys()}
 
 
-def process_microcontroller(name: str, compiled: dict[str, str]):
-	with (Path('microcontroller_hulls') / f'{name}.xml').open() as f:
+def process_microcontroller(mc_hull: Path, compiled: dict[str, str]):
+	with mc_hull.open() as f:
 		hull: str = f.read()
 	while match := TEMPLATE_REGEX.search(hull):
 		required_snippet: Optional[str] = compiled.get(match.group(1))
 		if not required_snippet:
 			raise ModuleNotFoundError(f'Could not find snippet {match.group(1)}')
 		hull = hull[:match.start()] + required_snippet + hull[match.end():]
-	with (Path('generated_microcontrollers') / f'{name}.xml').open('w') as f:
+	with (Path('generated_microcontrollers') / f'{mc_hull.stem}.xml').open('w') as f:
 		f.write(hull)
 
 
-def install(name: str):
+def install():
 	copy_dir: Path
 	if sys.platform == 'win32':
 		copy_dir = Path(os.path.expandvars('%APPDATA%'))
@@ -87,8 +118,14 @@ def install(name: str):
 	else:
 		raise NotImplementedError('Apple is not supported atm')
 	copy_dir = copy_dir / 'Stormworks' / 'data' / 'microprocessors'
-	shutil.copy(Path('generated_microcontrollers') / f'{name}.xml', copy_dir)
-	shutil.copy(Path('microcontroller_thumbnails') / f'{name}.png', copy_dir)
+	for mc in Path('generated_microcontrollers').iterdir():
+		if not mc.is_file():
+			continue
+		shutil.copy(mc, copy_dir)
+	for thumb in Path('microcontroller_thumbnails').iterdir():
+		if not thumb.is_file():
+			continue
+		shutil.copy(thumb, copy_dir)
 
 
 def main():
@@ -100,10 +137,12 @@ def main():
 	generated_microcontrollers_dir: Path = Path('generated_microcontrollers')
 	if not generated_microcontrollers_dir.is_dir():
 		generated_microcontrollers_dir.mkdir()
-	for mc_name in MICROCONTROLLERS:
-		process_microcontroller(mc_name, compiled)
-		if do_install:
-			install(mc_name)
+	for mc_hull in Path('microcontroller_hulls').iterdir():
+		if not mc_hull.is_file():
+			continue
+		process_microcontroller(mc_hull, compiled)
+	if do_install:
+		install()
 
 
 if __name__ == "__main__":
