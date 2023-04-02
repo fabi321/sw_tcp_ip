@@ -78,8 +78,9 @@ Protocol id 4
  - source port used for type/request/response
  - Names are limited to 20 characters. There are no domains available
 
-| Id | Name                             | Notes                                                          |
-|----|----------------------------------|----------------------------------------------------------------|
-| 0  | what is the address for {name}   |                                                                |
-| 1  | the address for ... is {address} | Name is not referred again. need to remember the sequence id   |
-| 2  | I want to register {name}        | The address that name is to be registered to is the {src_addr} |
+| Id | Name                             | Notes                                                               |
+|----|----------------------------------|---------------------------------------------------------------------|
+| 0  | what is the address for {name}   |                                                                     |
+| 1  | the address for ... is {address} | Name is not referred again. need to remember the sequence id        |
+| 2  | I want to register {name}        | The address that name is to be registered to is the {src_addr}      |
+| 3  | I want to unregister {name}      | The address that was assigned with {name} has to be the own address |
