@@ -52,7 +52,7 @@
 		</data>
 		<components>
 			<c type="56">
-				<object id="24" script="{{wifi_ap}}">
+				<object id="24" script="{{wifi/ap}}">
 					<pos x="0.5" y="-1.25"/>
 					<in1 component_id="25"/>
 				</object>
@@ -147,7 +147,7 @@ end
 		</components_bridge>
 		<groups/>
 		<component_states>
-			<c0 id="24" script="{{wifi_ap}}">
+			<c0 id="24" script="{{wifi/ap}}">
 				<pos x="0.5" y="-1.25"/>
 				<in1 component_id="25"/>
 			</c0>

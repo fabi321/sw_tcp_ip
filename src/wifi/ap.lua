@@ -1,7 +1,7 @@
 i=input;o=output
 gn=i.getNumber;gb=i.getBool;sn=o.setNumber;sb=o.setBool
 
-require('wifi_frequency_core')
+require('wifi/frequency_core')
 
 ---@param f number
 ---@returns number
