@@ -13,6 +13,8 @@ from itertools import chain
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
+SCRIPT_REGEX: re.Pattern = re.compile(r'script="([^"]*)"')
+MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="(.*?)".*?</microprocessor_definition>')
 
 
 class Snippet:
@@ -130,6 +132,29 @@ def install():
 		shutil.copy(thumb, copy_dir)
 
 
+def install_in_file(file: Path):
+	mcs: dict[str, str] = {}
+	for mc in Path('generated_microcontrollers').glob('*.xml'):
+		with mc.open() as f:
+			file_content = f.read()
+		name = re.search(r'<microprocessor name="([^"]*)"', file_content).group(1)
+		file_content = re.sub(r'<(/?)microprocessor([^>]*)>', r'<\1microprocessor_definition\2>', file_content)
+		file_content = file_content.replace('<?xml version="1.0" encoding="UTF-8"?>', '')
+		file_content = file_content.replace('\n', '').replace('\t', '')
+		mcs[name] = file_content
+	with file.open() as f:
+		vehicle = f.read()
+	start: int = 0
+	while match := MC_REGEX.search(vehicle, start):
+		start = match.start() + 1
+		name = match.group(1)
+		if name in mcs:
+			vehicle = vehicle[:match.start()] + mcs[name] + vehicle[match.end():]
+	with file.open('w') as f:
+		f.write(vehicle)
+
+
+
 def main():
 	load_dotenv()
 	do_install: bool = len(sys.argv) >= 2 and sys.argv[1] == 'install'
@@ -145,6 +170,8 @@ def main():
 		process_microcontroller(mc_hull, compiled)
 	if do_install:
 		install()
+		if len(sys.argv) >= 3:
+			install_in_file(Path(sys.argv[2]).expanduser().resolve())
 
 
 if __name__ == "__main__":
