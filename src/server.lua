@@ -2,8 +2,8 @@ require('packeting')
 require('packet_queue')
 require('dhcp_client')
 require('server')
-require('icmp_server')
-require('icmp_client')
+require('icmp/server')
+require('icmp/client')
 
 function onTick()
     for i=1,8 do
