@@ -1,7 +1,7 @@
 require('packeting')
 require('packet_queue')
 require('dhcp_client')
-require('arp_server')
+require('server')
 require('icmp_server')
 require('icmp_client')
 
