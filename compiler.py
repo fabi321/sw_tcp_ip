@@ -89,12 +89,12 @@ def compile_file(snippets: dict[str, Snippet], name: str) -> str:
 
 def compile() -> dict[str, str]:
 	snippets: dict[str, Snippet] = {}
-	for file in Path('src').iterdir():
+	for file in Path('src').glob("**/*.lua"):
 		if not file.is_file():
 			# Ignores directories for now
 			continue
 		with file.open() as f:
-			snippets[file.stem] = Snippet(f.read())
+			snippets['/'.join(chain(file.parts[1:-1], (file.stem,)))] = Snippet(f.read())
 	return {name: compile_file(snippets, name) for name in snippets.keys()}
 
 
