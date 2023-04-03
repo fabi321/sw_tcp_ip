@@ -4,6 +4,7 @@ require('packet_queue')
 require('dhcp_client')
 require('icmp/server')
 require('icmp/client')
+require('arp/server')
 
 function onTick()
     for i=1,8 do
