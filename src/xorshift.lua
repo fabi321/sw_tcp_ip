@@ -1,9 +1,9 @@
 ---@class Xorshift
 ---@field magic number
 ---@field state number
----@field seed function(num: number)
----@field next_int function(): number
----@field skip function()
+---@field seed fun(self, num: number)
+---@field next_int fun(self): number
+---@field skip fun(self)
 xorshift = {
     magic = 0x2545F4914F6CDD1D,
     state = 0,

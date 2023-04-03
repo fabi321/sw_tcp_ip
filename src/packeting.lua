@@ -1,6 +1,4 @@
----@type function(number): number
 gn = input.getNumber
----@type function(number, number)
 sn = output.setNumber
 
 ---@class Packet
