@@ -7,6 +7,9 @@ from typing import Optional
 import sys
 import shutil
 from pathlib import Path
+from datetime import datetime, timedelta
+from itertools import chain
+
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
@@ -116,13 +119,14 @@ def install():
 	else:
 		raise NotImplementedError('Apple is not supported atm')
 	copy_dir = copy_dir / 'Stormworks' / 'data' / 'microprocessors'
-	for mc in Path('generated_microcontrollers').iterdir():
-		if not mc.is_file():
-			continue
+	newest = datetime.now()
+	for mc in sorted(Path('generated_microcontrollers').glob('*.xml')):
 		shutil.copy(mc, copy_dir)
-	for thumb in Path('microcontroller_thumbnails').iterdir():
-		if not thumb.is_file():
-			continue
+		dest_file: Path = copy_dir / mc.name
+		assert dest_file.is_file()
+		os.utime(dest_file, (newest.timestamp(), newest.timestamp()))
+		newest -= timedelta(minutes=1)
+	for thumb in Path('microcontroller_thumbnails').glob('*.png'):
 		shutil.copy(thumb, copy_dir)
 
 
