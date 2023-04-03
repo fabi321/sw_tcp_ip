@@ -82,7 +82,7 @@ def merge_snippets(snippets: dict[str, Snippet], name: str) -> str:
 def compile_file(snippets: dict[str, Snippet], name: str) -> str:
 	text: str = merge_snippets(snippets, name)
 	text = minify(text)
-	assert len(text) <= 4096, 'script is too long'
+	assert len(text) <= 4096, f'script {name} is too long'
 	text = escape(text)
 	return text
 
