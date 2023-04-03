@@ -154,7 +154,6 @@ def install_in_file(file: Path):
 		f.write(vehicle)
 
 
-
 def main():
 	load_dotenv()
 	do_install: bool = len(sys.argv) >= 2 and sys.argv[1] == 'install'
