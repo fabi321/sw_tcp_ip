@@ -38,15 +38,15 @@ function get_address(packet, address)
             ttl = 63,
             data = dhcp_last_address
         }, 0)
-    elseif dhcp_state >= 1 and dhcp_state < 59 then
+    elseif dhcp_state >= 1 and dhcp_state < TIMEOUT then
         if packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
             get_new_address(address ~= nil)
             dhcp_state = 0
         else
             dhcp_state = dhcp_state + 1
         end
-    elseif dhcp_state == 59 then
-        dhcp_state = 60
+    elseif dhcp_state == TIMEOUT then
+        dhcp_state = TIMEOUT + 1
         send_own_packet(broadcast_address, 1, dhcp_last_address, 2)
     end
 end

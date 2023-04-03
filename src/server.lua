@@ -1,3 +1,4 @@
+require('util')
 require('packeting')
 require('packet_queue')
 require('dhcp_client')
@@ -10,7 +11,7 @@ function onTick()
     end
     local packet = to_packet(1)
     arp_receive_packet(packet, 1)
-    if dhcp_state < 60 then
+    if dhcp_state < TIMEOUT + 1 then
         if input.getBool(1) then
             get_address(packet)
         end

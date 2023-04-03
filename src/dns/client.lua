@@ -1,3 +1,4 @@
+require('util')
 require('dhcp_client')
 
 ---@type string
@@ -31,7 +32,7 @@ function dns_lookup(name, packet)
         if dns_client_status == 0 then
             send_own_packet(dns_client_dns_server, 4, name, 0)
             dns_client_status = 1
-        elseif dns_client_status < 60 then
+        elseif dns_client_status < TIMEOUT then
             dns_client_status = dns_client_status + 1
         else
             dns_client_status = 0
