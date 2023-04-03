@@ -17,6 +17,7 @@ function get_new_address(address_supplied)
     end
 end
 
+---@overload fun(packet: Packet)
 ---@param packet Packet
 ---@param address string | nil
 function get_address(packet, address)
@@ -51,6 +52,9 @@ function get_address(packet, address)
     end
 end
 
+---@overload fun(dest_addr: string, proto: number, data: string)
+---@overload fun(dest_addr: string, proto: number, data: string, src_port: number)
+---@overload fun(dest_addr: string, proto: number, data: string, src_port: number, dest_port: number, seq_nmb: number)
 ---@param dest_addr string
 ---@param proto number
 ---@param data string
