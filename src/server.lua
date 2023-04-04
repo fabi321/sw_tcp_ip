@@ -32,6 +32,7 @@ function onTick()
             end
         end
     end
+    tick_arp_cache()
     tick_packet_queue()
     packet = send_packet(1)
     if packet ~= nil then

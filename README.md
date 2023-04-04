@@ -58,11 +58,12 @@ Protocol id 1
  - source port used for type
  - Used to prime all switches
  - Used as a crappy DHCP
+ - For DHCP: Cache all requests with id 1, as they might be ongoing DHCP connection attempts
 
-| Id | Name                |
-|----|---------------------|
-| 1  | Who has \<Address\> |
-| 2  | I have \<Address\>  |
+| Id | Name                                       |
+|----|--------------------------------------------|
+| 1  | Who has {address}                          |
+| 2  | I have {address}                           |
 
 ### [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 

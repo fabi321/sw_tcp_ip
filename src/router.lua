@@ -11,6 +11,7 @@ function onTick()
             receive_packet(packet, i)
         end
     end
+    tick_arp_cache()
     tick_packet_queue()
     for i=1,4 do
         local packet = send_packet(i)

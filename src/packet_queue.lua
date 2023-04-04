@@ -39,7 +39,7 @@ function receive_packet(packet, direction)
     if packet.dest_addr ~= broadcast_address then
         ---@type number
         local destination = get_direction_for_packet(packet)
-        if destination == -1 then
+        if destination < 0 then
             -- Try to look the address up
             if not arp_lookup[packet.dest_addr] then
                 arp_lookup[packet.dest_addr] = {
