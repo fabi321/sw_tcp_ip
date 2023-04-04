@@ -6,7 +6,7 @@ address_cache = {}
 ---@param packet Packet
 ---@param direction number
 function arp_receive_packet(packet, direction)
-    if not packet.src_addr ~= broadcast_address then
+    if packet.src_addr ~= broadcast_address then
         address_cache[packet.src_addr] = direction
     end
 end
