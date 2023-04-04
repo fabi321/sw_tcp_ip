@@ -9,9 +9,11 @@ dhcp_last_address = broadcast_address
 ---@param address_supplied boolean
 function get_new_address(address_supplied)
     while address_cache[dhcp_last_address] or dhcp_last_address == broadcast_address do
-        local new_int_address = math.random(4096, 65534)
-        if address_supplied then
-            new_int_address = (tonumber(dhcp_last_address, 16) + 1) % 65535
+        -- while random addresses for clients without a static address would be ideal, there is no reliable way to get
+        -- synchronised seeds in Stormworks, so no random numbers
+        local new_int_address = (tonumber(dhcp_last_address, 16) + 1) % 65535
+        if not address_supplied then
+            new_int_address = math.max(4096, new_int_address)
         end
         dhcp_last_address = ("%04x"):format(new_int_address)
     end
