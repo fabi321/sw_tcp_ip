@@ -37,8 +37,21 @@ Address `ffff` is reserved as broadcast.
 Address `0000` is preferably used for the DNS server, but not technically restricted to it.
 DHCP will only assign addresses between (including) `1000` and `fffe`.
 
+### About the way that the protocols are butchered
 
-### ARP
+Most of the documentation is to be read as a diff opposed to what the standards usually are.
+
+Addresses are a mixture of MAC- and IP-Addresses. There are no statically assigned addresses, but there is no routing.
+They are assigned using DHCP, but it is closer to the IPv6 autoconfiguration than to DHCP, in that there is no server.
+Clients are identifying as broadcast during the initialisation. ARP is not used to get IP to MAC address mappings, but
+rather used to discover what addresses are in use.
+
+While I do call the central connection points `router`, this is mostly done to not confuse the average user as much.
+Since there is no routing taking place, `switch` would be a more appropriate name for them.
+They have no own address, and all they are doing is effectively having an arp cache, that they use to identify, where
+to send packets to.
+
+### [ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol)
 
 Protocol id 1
 
@@ -51,7 +64,7 @@ Protocol id 1
 | 1  | Who has \<Address\> |
 | 2  | I have \<Address\>  |
 
-### TCP
+### [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 
 Protocol id 2
 
@@ -60,7 +73,7 @@ If TCP has broadcast as destination, there will be no sequence numbers and ackno
  - Works similar to real TCP
  - retransmits are handled on a hop-by-hop basis
 
-### ICMP
+### [ICMP](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol)
 
 Protocol id 3
 
@@ -72,7 +85,7 @@ Protocol id 3
 | 0  | Ping reply   |
 | 1  | Ping request |
 
-### DNS
+### [DNS](https://en.wikipedia.org/wiki/Domain_Name_System)
 
 Protocol id 4
  - source port used for type/request/response
