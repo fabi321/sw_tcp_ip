@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<microprocessor name="wifi_ap" description="No description set." width="3" length="3" id_counter="29" id_counter_node="9" sym1="65535" sym2="65535" sym3="32766" sym4="32766" sym5="16380" sym6="16380" sym7="4104" sym8="4104" sym9="4104" sym10="4104" sym11="4104" sym12="4104" sym13="4104" sym14="4104">
+<microprocessor name="wifi_ap" description="No description set." width="3" length="3" id_counter="66" id_counter_node="9" sym1="65535" sym2="65535" sym3="32766" sym4="32766" sym5="16380" sym6="16380" sym7="4104" sym8="4104" sym9="4104" sym10="4104" sym11="4104" sym12="4104" sym13="4104" sym14="4104">
 	<nodes>
 		<n id="1" component_id="7">
 			<node label="router in" mode="1" type="5" description="The input signal to be processed."/>
@@ -54,40 +54,205 @@
 			<c type="56">
 				<object id="24" script="{{wifi/ap}}">
 					<pos x="0.5" y="-1.25"/>
-					<in1 component_id="25"/>
-				</object>
-			</c>
-			<c type="40">
-				<object id="25" count="1" offset="9">
-					<pos x="-0.75" y="-1.25"/>
-					<in1 component_id="16"/>
+					<in1 component_id="30">
+						<v 10="-14.095815"/>
+					</in1>
+					<out1>
+						<v 10="11503" 11="3314471" 20="3773878" 21="2055646"/>
+					</out1>
 				</object>
 			</c>
 			<c type="56">
 				<object id="26" script="function onTick()
-	output.setNumber(10, input.getNumber(10))
-	output.setNumber(11, input.getNumber(11))
+	output.setNumber(10, input.getNumber(17))
+	output.setNumber(11, input.getNumber(18))
 	output.setBool(10, true)
+end
+">
+					<pos x="1.75" y="-2.25"/>
+					<in1 component_id="24">
+						<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+					</in1>
+					<out1>
+						<v bools="512" 10="11502" 11="3314471"/>
+					</out1>
+				</object>
+			</c>
+			<c type="16">
+				<object id="27">
+					<pos x="1.75" y="-0.5"/>
+					<out1 v="true"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="28" i="19">
+					<pos x="1.75" y="-2.75"/>
+					<in1 component_id="24">
+						<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+					</in1>
+					<out1 v="500230"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="29" i="20">
+					<pos x="1.75" y="-3.25"/>
+					<in1 component_id="24">
+						<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+					</in1>
+					<out1 v="509197"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="30" count="17">
+					<pos x="-0.75" y="-5.25"/>
+					<in1 component_id="31"/>
+					<in2 component_id="32"/>
+					<in3 component_id="33"/>
+					<in4 component_id="34"/>
+					<in5 component_id="35"/>
+					<in6 component_id="36"/>
+					<in7 component_id="37"/>
+					<in8 component_id="38"/>
+					<in9 component_id="39"/>
+					<in10 component_id="40"/>
+					<in11 component_id="41"/>
+					<in12 component_id="42"/>
+					<in13 component_id="43"/>
+					<in14 component_id="44"/>
+					<in15 component_id="45"/>
+					<in16 component_id="46"/>
+					<in17 component_id="16"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="31">
+					<pos x="-2" y="-1.25"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="32" i="1">
+					<pos x="-2" y="-1.5"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="33" i="2">
+					<pos x="-2" y="-1.75"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="34" i="3">
+					<pos x="-2" y="-2"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="35" i="4">
+					<pos x="-2" y="-2.25"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="36" i="5">
+					<pos x="-2" y="-2.5"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="37" i="6">
+					<pos x="-2" y="-2.75"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="38" i="7">
+					<pos x="-2" y="-3"/>
+					<in1 component_id="13"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="39">
+					<pos x="-2" y="-3.25"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="40" i="1">
+					<pos x="-2" y="-3.5"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="41" i="2">
+					<pos x="-2" y="-3.75"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="42" i="3">
+					<pos x="-2" y="-4"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="43" i="4">
+					<pos x="-2" y="-4.25"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="44" i="5">
+					<pos x="-2" y="-4.5"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="45" i="6">
+					<pos x="-2" y="-4.75"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="46" i="7">
+					<pos x="-2" y="-5"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="65" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(1))
+	sn(2,gn(2))
+	sn(3,gn(3))
+	sn(4,gn(4))
+	sn(5,gn(5))
+	sn(6,gn(6))
+	sn(7,gn(7))
+	sn(8,gn(8))
 end
 ">
 					<pos x="1.75" y="-1.25"/>
 					<in1 component_id="24"/>
 				</object>
 			</c>
-			<c type="16">
-				<object id="27">
-					<pos x="1.75" y="-0.5"/>
-				</object>
-			</c>
-			<c type="31">
-				<object id="28" i="19">
+			<c type="56">
+				<object id="66" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end
+">
 					<pos x="1.75" y="-1.75"/>
-					<in1 component_id="24"/>
-				</object>
-			</c>
-			<c type="31">
-				<object id="29" i="20">
-					<pos x="1.75" y="-2.25"/>
 					<in1 component_id="24"/>
 				</object>
 			</c>
@@ -95,53 +260,63 @@ end
 		<components_bridge>
 			<c type="4">
 				<object id="7">
-					<pos x="-2" y="-0.5"/>
+					<pos x="-3.25" y="-3.25"/>
 				</object>
 			</c>
 			<c type="5">
 				<object id="10">
-					<pos x="-0.75"/>
-					<in1 component_id="13"/>
+					<pos x="3" y="-1.5"/>
+					<in1 component_id="66"/>
 				</object>
 			</c>
 			<c type="4">
 				<object id="13">
-					<pos x="-2"/>
+					<pos x="-3.25" y="-1.25"/>
 				</object>
 			</c>
 			<c type="5">
 				<object id="15">
-					<pos x="-0.75" y="-0.5"/>
-					<in1 component_id="7"/>
+					<pos x="3" y="-1"/>
+					<in1 component_id="65"/>
 				</object>
 			</c>
 			<c type="2">
 				<object id="16">
-					<pos x="-2" y="-1.25"/>
+					<pos x="-2" y="-5.25"/>
+					<in1 v="-14.095273"/>
+					<out1 v="-14.095273"/>
 				</object>
 			</c>
 			<c type="1">
 				<object id="17">
 					<pos x="3" y="-0.5"/>
-					<in1 component_id="27"/>
+					<in1 component_id="27" v="true"/>
+					<out1 v="true"/>
 				</object>
 			</c>
 			<c type="3">
 				<object id="20">
-					<pos x="3" y="-1.75"/>
-					<in1 component_id="28"/>
+					<pos x="3" y="-2.75"/>
+					<in1 component_id="28" v="500230"/>
+					<out1 v="500230"/>
 				</object>
 			</c>
 			<c type="3">
 				<object id="21">
-					<pos x="3" y="-2.25"/>
-					<in1 component_id="29"/>
+					<pos x="3" y="-3.25"/>
+					<in1 component_id="29" v="509197"/>
+					<out1 v="509197"/>
 				</object>
 			</c>
 			<c type="5">
 				<object id="23">
-					<pos x="3" y="-1"/>
-					<in1 component_id="26"/>
+					<pos x="3" y="-2"/>
+					<in1 component_id="26">
+						<v bools="512" 10="11502" 11="3314471"/>
+					</in1>
+					<out1>
+						<v bools="512" 10="11502" 11="3314471"/>
+					</out1>
 				</object>
 			</c>
 		</components_bridge>
@@ -149,66 +324,205 @@ end
 		<component_states>
 			<c0 id="24" script="{{wifi/ap}}">
 				<pos x="0.5" y="-1.25"/>
-				<in1 component_id="25"/>
+				<in1 component_id="30">
+					<v 10="-14.095815"/>
+				</in1>
+				<out1>
+					<v 10="11503" 11="3314471" 20="3773878" 21="2055646"/>
+				</out1>
 			</c0>
-			<c1 id="25" count="1" offset="9">
-				<pos x="-0.75" y="-1.25"/>
-				<in1 component_id="16"/>
-			</c1>
-			<c2 id="26" script="function onTick()
-	output.setNumber(10, input.getNumber(10))
-	output.setNumber(11, input.getNumber(11))
+			<c1 id="26" script="function onTick()
+	output.setNumber(10, input.getNumber(17))
+	output.setNumber(11, input.getNumber(18))
 	output.setBool(10, true)
+end
+">
+				<pos x="1.75" y="-2.25"/>
+				<in1 component_id="24">
+					<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+				</in1>
+				<out1>
+					<v bools="512" 10="11502" 11="3314471"/>
+				</out1>
+			</c1>
+			<c2 id="27">
+				<pos x="1.75" y="-0.5"/>
+				<out1 v="true"/>
+			</c2>
+			<c3 id="28" i="19">
+				<pos x="1.75" y="-2.75"/>
+				<in1 component_id="24">
+					<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+				</in1>
+				<out1 v="500230"/>
+			</c3>
+			<c4 id="29" i="20">
+				<pos x="1.75" y="-3.25"/>
+				<in1 component_id="24">
+					<v 10="11502" 11="3314471" 20="500230" 21="509197"/>
+				</in1>
+				<out1 v="509197"/>
+			</c4>
+			<c5 id="30" count="17">
+				<pos x="-0.75" y="-5.25"/>
+				<in1 component_id="31"/>
+				<in2 component_id="32"/>
+				<in3 component_id="33"/>
+				<in4 component_id="34"/>
+				<in5 component_id="35"/>
+				<in6 component_id="36"/>
+				<in7 component_id="37"/>
+				<in8 component_id="38"/>
+				<in9 component_id="39"/>
+				<in10 component_id="40"/>
+				<in11 component_id="41"/>
+				<in12 component_id="42"/>
+				<in13 component_id="43"/>
+				<in14 component_id="44"/>
+				<in15 component_id="45"/>
+				<in16 component_id="46"/>
+				<in17 component_id="16"/>
+			</c5>
+			<c6 id="31">
+				<pos x="-2" y="-1.25"/>
+				<in1 component_id="13"/>
+			</c6>
+			<c7 id="32" i="1">
+				<pos x="-2" y="-1.5"/>
+				<in1 component_id="13"/>
+			</c7>
+			<c8 id="33" i="2">
+				<pos x="-2" y="-1.75"/>
+				<in1 component_id="13"/>
+			</c8>
+			<c9 id="34" i="3">
+				<pos x="-2" y="-2"/>
+				<in1 component_id="13"/>
+			</c9>
+			<c10 id="35" i="4">
+				<pos x="-2" y="-2.25"/>
+				<in1 component_id="13"/>
+			</c10>
+			<c11 id="36" i="5">
+				<pos x="-2" y="-2.5"/>
+				<in1 component_id="13"/>
+			</c11>
+			<c12 id="37" i="6">
+				<pos x="-2" y="-2.75"/>
+				<in1 component_id="13"/>
+			</c12>
+			<c13 id="38" i="7">
+				<pos x="-2" y="-3"/>
+				<in1 component_id="13"/>
+			</c13>
+			<c14 id="39">
+				<pos x="-2" y="-3.25"/>
+				<in1 component_id="7"/>
+			</c14>
+			<c15 id="40" i="1">
+				<pos x="-2" y="-3.5"/>
+				<in1 component_id="7"/>
+			</c15>
+			<c16 id="41" i="2">
+				<pos x="-2" y="-3.75"/>
+				<in1 component_id="7"/>
+			</c16>
+			<c17 id="42" i="3">
+				<pos x="-2" y="-4"/>
+				<in1 component_id="7"/>
+			</c17>
+			<c18 id="43" i="4">
+				<pos x="-2" y="-4.25"/>
+				<in1 component_id="7"/>
+			</c18>
+			<c19 id="44" i="5">
+				<pos x="-2" y="-4.5"/>
+				<in1 component_id="7"/>
+			</c19>
+			<c20 id="45" i="6">
+				<pos x="-2" y="-4.75"/>
+				<in1 component_id="7"/>
+			</c20>
+			<c21 id="46" i="7">
+				<pos x="-2" y="-5"/>
+				<in1 component_id="7"/>
+			</c21>
+			<c22 id="65" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(1))
+	sn(2,gn(2))
+	sn(3,gn(3))
+	sn(4,gn(4))
+	sn(5,gn(5))
+	sn(6,gn(6))
+	sn(7,gn(7))
+	sn(8,gn(8))
 end
 ">
 				<pos x="1.75" y="-1.25"/>
 				<in1 component_id="24"/>
-			</c2>
-			<c3 id="27">
-				<pos x="1.75" y="-0.5"/>
-			</c3>
-			<c4 id="28" i="19">
+			</c22>
+			<c23 id="66" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end
+">
 				<pos x="1.75" y="-1.75"/>
 				<in1 component_id="24"/>
-			</c4>
-			<c5 id="29" i="20">
-				<pos x="1.75" y="-2.25"/>
-				<in1 component_id="24"/>
-			</c5>
+			</c23>
 		</component_states>
 		<component_bridge_states>
 			<c0 id="7">
-				<pos x="-2" y="-0.5"/>
+				<pos x="-3.25" y="-3.25"/>
 			</c0>
 			<c1 id="10">
-				<pos x="-0.75"/>
-				<in1 component_id="13"/>
+				<pos x="3" y="-1.5"/>
+				<in1 component_id="66"/>
 			</c1>
 			<c2 id="13">
-				<pos x="-2"/>
+				<pos x="-3.25" y="-1.25"/>
 			</c2>
 			<c3 id="15">
-				<pos x="-0.75" y="-0.5"/>
-				<in1 component_id="7"/>
+				<pos x="3" y="-1"/>
+				<in1 component_id="65"/>
 			</c3>
 			<c4 id="16">
-				<pos x="-2" y="-1.25"/>
+				<pos x="-2" y="-5.25"/>
+				<in1 v="-14.095273"/>
+				<out1 v="-14.095273"/>
 			</c4>
 			<c5 id="17">
 				<pos x="3" y="-0.5"/>
-				<in1 component_id="27"/>
+				<in1 component_id="27" v="true"/>
+				<out1 v="true"/>
 			</c5>
 			<c6 id="20">
-				<pos x="3" y="-1.75"/>
-				<in1 component_id="28"/>
+				<pos x="3" y="-2.75"/>
+				<in1 component_id="28" v="500230"/>
+				<out1 v="500230"/>
 			</c6>
 			<c7 id="21">
-				<pos x="3" y="-2.25"/>
-				<in1 component_id="29"/>
+				<pos x="3" y="-3.25"/>
+				<in1 component_id="29" v="509197"/>
+				<out1 v="509197"/>
 			</c7>
 			<c8 id="23">
-				<pos x="3" y="-1"/>
-				<in1 component_id="26"/>
+				<pos x="3" y="-2"/>
+				<in1 component_id="26">
+					<v bools="512" 10="11502" 11="3314471"/>
+				</in1>
+				<out1>
+					<v bools="512" 10="11502" 11="3314471"/>
+				</out1>
 			</c8>
 		</component_bridge_states>
 		<group_states/>
