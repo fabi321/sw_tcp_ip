@@ -14,7 +14,7 @@ from itertools import chain
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
 SCRIPT_REGEX: re.Pattern = re.compile(r'script="([^"]*)"')
-MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="(.*?)".*?</microprocessor_definition>')
+MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="([^"]*)".*?</microprocessor_definition>', re.DOTALL)
 
 
 class Snippet:
