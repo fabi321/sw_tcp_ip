@@ -25,8 +25,6 @@ is_wifi = true
 largest_interface_id = 2
 
 function onTick()
-    is_wifi = true
-    largest_interface_id = 2
     for i=1,32 do
         sn(i, 0)
     end
