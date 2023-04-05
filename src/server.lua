@@ -6,6 +6,8 @@ require('icmp/server')
 require('icmp/client')
 require('arp/server')
 
+largest_interface_id = 1
+
 function onTick()
     for i=1,8 do
         sn(i, 0)
@@ -37,9 +39,6 @@ function onTick()
     packet = send_packet(1)
     if packet ~= nil then
         to_channels(packet, 1)
-    end
-    for i=2,4 do
-        send_packet(i)
     end
     sn(10, tonumber(dhcp_last_address, 16))
 end

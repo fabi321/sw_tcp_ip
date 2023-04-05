@@ -8,6 +8,12 @@ packet_queue = {}
 arp_lookup = {}
 ---@type number
 newest_packet = 1
+--- Sends all broadcast packets from direction 1 back to direction 1, too
+---@type boolean
+is_wifi = false
+--- Largest interface id
+---@type number
+largest_interface_id = 4
 
 ---@param packet Packet
 ---@param direction number
@@ -56,8 +62,8 @@ function receive_packet(packet, direction)
         }
         newest_packet = newest_packet + 1
     else
-        for i=1,4 do
-            if i ~= direction then
+        for i=1,largest_interface_id do
+            if i ~= direction or i == 1 and is_wifi then
                 packet_queue[newest_packet] = {
                     retry_time = 0,
                     retry_count = 0,
