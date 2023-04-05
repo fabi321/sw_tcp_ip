@@ -140,7 +140,7 @@ def install_in_file(file: Path):
 		name = re.search(r'<microprocessor name="([^"]*)"', file_content).group(1)
 		file_content = re.sub(r'<(/?)microprocessor([^>]*)>', r'<\1microprocessor_definition\2>', file_content)
 		file_content = file_content.replace('<?xml version="1.0" encoding="UTF-8"?>', '')
-		file_content = file_content.replace('\n', '').replace('\t', '')
+		file_content = file_content.replace('\n', ' ').replace('\t', '')
 		mcs[name] = file_content
 	with file.open() as f:
 		vehicle = f.read()
