@@ -146,7 +146,7 @@ def install_in_file(file: Path):
 		vehicle = f.read()
 	start: int = 0
 	while match := MC_REGEX.search(vehicle, start):
-		start = match.start() + 1
+		start = match.start() + 10
 		name = match.group(1)
 		if name in mcs:
 			vehicle = vehicle[:match.start()] + mcs[name] + vehicle[match.end():]
