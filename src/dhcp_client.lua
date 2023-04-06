@@ -23,6 +23,9 @@ end
 ---@param packet Packet
 ---@param address string | nil
 function get_address(packet, address)
+    if packet.ttl > 0 then
+        arp_receive_packet(packet, 1)
+    end
     if address and dhcp_last_address == broadcast_address then
         dhcp_last_address = address
     elseif dhcp_last_address == broadcast_address then
@@ -42,7 +45,7 @@ function get_address(packet, address)
             data = dhcp_last_address
         }, 0)
     elseif dhcp_state >= 1 and dhcp_state < TIMEOUT then
-        if packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
+        if packet.ttl > 0 and packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
             get_new_address(address ~= nil)
             dhcp_state = 0
         else
@@ -75,5 +78,5 @@ function send_own_packet(dest_addr, proto, data, src_port, dest_port, seq_nmb, a
             proto = proto,
             ttl = 63,
             data = data
-        }, 0)
+        }, 1)
 end

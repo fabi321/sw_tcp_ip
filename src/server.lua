@@ -1,3 +1,5 @@
+error('This module is broken!')
+
 require('util')
 require('packeting')
 require('packet_queue')
@@ -13,13 +15,13 @@ function onTick()
         sn(i, 0)
     end
     local packet = to_packet(1)
-    arp_receive_packet(packet, 1)
     if dhcp_state < TIMEOUT + 1 then
         if input.getBool(1) then
             get_address(packet)
         end
     else
         if packet.ttl > 0 then
+            arp_receive_packet(packet, 1)
             if packet.proto == 1 then
                 respond_to_arp(packet)
             elseif packet.proto == 3 then
