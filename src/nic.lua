@@ -23,7 +23,7 @@ function onTick()
         end
     else
         if packet.ttl > 0 then
-            receive_packet(packet, 1)
+            receive_packet(packet, 2)
         end
         packet = to_packet(1)
         if packet.ttl > 0 then
