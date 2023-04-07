@@ -13,7 +13,7 @@ function onTick()
     end
     local packet = to_packet(9)
     if dhcp_state < TIMEOUT + 1 then
-        if input.getBool(1) then
+        if gb(1) then
             ---@type string | nil
             local preferred_address = nil
             if gn(17) ~= 65535 then
@@ -49,5 +49,5 @@ function onTick()
         to_channels(packet, 9)
     end
     sn(17, tonumber(dhcp_last_address, 16))
-    output.setBool(1, dhcp_state == TIMEOUT + 1)
+    sb(1, dhcp_state == TIMEOUT + 1)
 end

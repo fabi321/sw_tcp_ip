@@ -1,5 +1,4 @@
-gn = input.getNumber
-sn = output.setNumber
+require('util')
 
 ---@class Packet
 ---@field src_addr string
@@ -37,7 +36,9 @@ function to_packet(start_channel)
                 gn(start_channel + 3),
                 gn(start_channel + 4),
                 gn(start_channel + 5),
-                gn(start_channel + 6),
+                gn(start_channel + 6),gn = input.getNumber
+sn = output.setNumber
+
                 gn(start_channel + 7))
     return --[[---@type Packet]] {
         src_addr = ("%04x"):format(byte_to_int(gn(start_channel), 1, 2)),

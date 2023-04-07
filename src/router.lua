@@ -1,3 +1,4 @@
+require('util')
 require('packeting')
 require('packet_queue')
 

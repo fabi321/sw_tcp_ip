@@ -16,7 +16,7 @@ function onTick()
     end
     local packet = to_packet(1)
     if dhcp_state < TIMEOUT + 1 then
-        if input.getBool(1) then
+        if gb(1) then
             get_address(packet)
         end
     else
@@ -28,7 +28,7 @@ function onTick()
                 respond_to_icmp(packet)
             end
         end
-        if input.getBool(2) then
+        if gb(2) then
             local destination_address = ("%04x"):format(gn(10))
             local result = icmp_ping(packet, destination_address)
             if result then

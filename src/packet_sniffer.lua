@@ -1,3 +1,4 @@
+require('util')
 require('packeting')
 label = property.getText('label')
 
@@ -8,7 +9,7 @@ function onTick()
     tick = tick + 1
     packet = to_packet(1)
     if packet.ttl > 0 then
-        output.setBool(1, true)
+        sb(1, true)
         sn(1, tonumber(packet.src_addr, 16))
         sn(2, tonumber(packet.dest_addr, 16))
         sn(3, packet.src_port)
