@@ -15,6 +15,23 @@ REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
 SCRIPT_REGEX: re.Pattern = re.compile(r'script="([^"]*)"')
 MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="([^"]*)".*?</microprocessor_definition>', re.DOTALL)
+NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z0-9_]+)')
+
+FIELD_REPLACEMENTS: dict[str, str] = {
+	'src_addr': 'a',
+	'dest_addr': 'b',
+	'src_port': 'c',
+	'dest_port': 'd',
+	'seq_nmb': 'e',
+	'ack_nmb': 'f',
+	'proto': 'g',
+	'ttl': 'h',
+	'data': 'i',
+	'retry_time': 'j',
+	'retry_count': 'k',
+	'packet': 'l',
+	'destination': 'm'
+}
 
 
 class Snippet:
@@ -24,6 +41,11 @@ class Snippet:
 
 
 def minify(text: str) -> str:
+	def replace(match: re.Match) -> str:
+		return FIELD_REPLACEMENTS.get(match.group(1), match.group(1))
+
+	text = NAME_REGEX.sub(replace, text)
+	
 	process: Popen = Popen(['lua5.4', 'minify.lua', 'minify', '-'], stdin=PIPE, stderr=PIPE, stdout=PIPE)
 	result = process.communicate(text.encode())
 	if result[1]:
