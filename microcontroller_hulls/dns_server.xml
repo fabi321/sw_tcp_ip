@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="dns_server" description="No description set." width="2" length="1" id_counter="17" id_counter_node="2" sym8="14926" sym9="17234" sym10="17234" sym11="13010" sym12="2770" sym13="2642" sym14="29262">
+	<nodes>
+		<n id="1" component_id="3">
+			<node label="from router" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+		<n id="2" component_id="5">
+			<node label="to router" type="5" description="The input signal to be processed.">
+				<position x="1"/>
+			</node>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="6" script="{{nic}}">
+					<pos x="2.75" y="-0.25"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="7" count="8" offset="8">
+					<pos x="1.5" y="-2"/>
+					<inc component_id="16"/>
+					<in1 component_id="8"/>
+					<in2 component_id="9"/>
+					<in3 component_id="10"/>
+					<in4 component_id="11"/>
+					<in5 component_id="12"/>
+					<in6 component_id="13"/>
+					<in7 component_id="14"/>
+					<in8 component_id="15"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="8">
+					<pos x="0.25" y="-0.25"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="9" i="1">
+					<pos x="0.25" y="-0.5"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="10" i="2">
+					<pos x="0.25" y="-0.75"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="11" i="3">
+					<pos x="0.25" y="-1"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="12" i="4">
+					<pos x="0.25" y="-1.25"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="13" i="5">
+					<pos x="0.25" y="-1.5"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="14" i="6">
+					<pos x="0.25" y="-1.75"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="15" i="7">
+					<pos x="0.25" y="-2"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="16" script="{{server_mcs/dns}}">
+					<pos x="2.75" y="0.5"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="17" script="gn=input.getNumber;sn=output.setNumber
+
+function
+	onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end ">
+					<pos x="4" y="-0.25"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="3">
+					<pos x="-1" y="-0.25"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="5">
+					<pos x="5.25"/>
+					<in1 component_id="17"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="6" script="{{nic}}">
+				<pos x="2.75" y="-0.25"/>
+				<in1 component_id="7"/>
+			</c0>
+			<c1 id="7" count="8" offset="8">
+				<pos x="1.5" y="-2"/>
+				<inc component_id="16"/>
+				<in1 component_id="8"/>
+				<in2 component_id="9"/>
+				<in3 component_id="10"/>
+				<in4 component_id="11"/>
+				<in5 component_id="12"/>
+				<in6 component_id="13"/>
+				<in7 component_id="14"/>
+				<in8 component_id="15"/>
+			</c1>
+			<c2 id="8">
+				<pos x="0.25" y="-0.25"/>
+				<in1 component_id="3"/>
+			</c2>
+			<c3 id="9" i="1">
+				<pos x="0.25" y="-0.5"/>
+				<in1 component_id="3"/>
+			</c3>
+			<c4 id="10" i="2">
+				<pos x="0.25" y="-0.75"/>
+				<in1 component_id="3"/>
+			</c4>
+			<c5 id="11" i="3">
+				<pos x="0.25" y="-1"/>
+				<in1 component_id="3"/>
+			</c5>
+			<c6 id="12" i="4">
+				<pos x="0.25" y="-1.25"/>
+				<in1 component_id="3"/>
+			</c6>
+			<c7 id="13" i="5">
+				<pos x="0.25" y="-1.5"/>
+				<in1 component_id="3"/>
+			</c7>
+			<c8 id="14" i="6">
+				<pos x="0.25" y="-1.75"/>
+				<in1 component_id="3"/>
+			</c8>
+			<c9 id="15" i="7">
+				<pos x="0.25" y="-2"/>
+				<in1 component_id="3"/>
+			</c9>
+			<c10 id="16" script="{{server_mcs/dns}}">
+				<pos x="2.75" y="0.5"/>
+				<in1 component_id="6"/>
+			</c10>
+			<c11 id="17" script="gn=input.getNumber;sn=output.setNumber
+
+function
+	onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end ">
+				<pos x="4" y="-0.25"/>
+				<in1 component_id="6"/>
+			</c11>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="3">
+				<pos x="-1" y="-0.25"/>
+			</c0>
+			<c1 id="5">
+				<pos x="5.25"/>
+				<in1 component_id="17"/>
+			</c1>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
