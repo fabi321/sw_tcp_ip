@@ -39,8 +39,8 @@ function to_packet(start_channel)
                 gn(start_channel + 6),
                 gn(start_channel + 7))
     return --[[---@type Packet]] {
-        src_addr = ("%04x"):format(byte_to_int(gn(start_channel), 1, 2)),
-        dest_addr = ("%04x"):format(byte_to_int(gn(start_channel), 3, 2)),
+        src_addr = ADDRESS_FORMAT:format(byte_to_int(gn(start_channel), 1, 2)),
+        dest_addr = ADDRESS_FORMAT:format(byte_to_int(gn(start_channel), 3, 2)),
         src_port = byte_to_int(gn(start_channel + 1), 1, 1),
         dest_port = byte_to_int(gn(start_channel + 1), 2, 1),
         seq_nmb = byte_to_int(gn(start_channel + 1), 3, 1),

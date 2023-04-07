@@ -15,7 +15,7 @@ function get_new_address(address_supplied)
         if not address_supplied then
             new_int_address = math.max(4096, new_int_address)
         end
-        dhcp_last_address = ("%04x"):format(new_int_address)
+        dhcp_last_address = ADDRESS_FORMAT:format(new_int_address)
     end
 end
 

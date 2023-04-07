@@ -17,7 +17,7 @@ function onTick()
             ---@type string | nil
             local preferred_address = nil
             if gn(17) ~= 65535 then
-                preferred_address = ("%04x"):format(gn(17))
+                preferred_address = ADDRESS_FORMAT:format(gn(17))
             end
             get_address(packet, preferred_address)
         end
