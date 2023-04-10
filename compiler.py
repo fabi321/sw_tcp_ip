@@ -142,7 +142,9 @@ def proces_properties() -> dict[str, str]:
 	properties: dict[str, str] = {}
 	for file in Path('properties').glob('**/*.property'):
 		with file.open() as f:
-			properties[path_to_short_name(file)] = f.read()
+			content: str = f.read()
+			assert len(content) <= 4096, f'property {file.stem} si too long'
+			properties[path_to_short_name(file)] = content
 	return properties
 
 
