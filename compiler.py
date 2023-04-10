@@ -11,11 +11,11 @@ from datetime import datetime, timedelta
 from itertools import chain
 
 
-REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/]+)["']\)''')
-TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/]+)\}\}')
+REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/-]+)["']\)''')
+TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/-]+)\}\}')
 SCRIPT_REGEX: re.Pattern = re.compile(r'script="([^"]*)"')
 MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="([^"]*)".*?</microprocessor_definition>', re.DOTALL)
-NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z0-9_]+)')
+NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z0-9_-]+)')
 
 FIELD_REPLACEMENTS: dict[str, str] = {
 	'src_addr': 'a',
@@ -111,6 +111,10 @@ def compile_file(snippets: dict[str, Snippet], name: str) -> str:
 	return text
 
 
+def path_to_short_name(path: Path) -> str:
+	return '/'.join(chain(path.parts[1:-1], (path.stem,)))
+
+
 def compile() -> dict[str, str]:
 	snippets: dict[str, Snippet] = {}
 	for file in Path('src').glob("**/*.lua"):
@@ -118,7 +122,7 @@ def compile() -> dict[str, str]:
 			# Ignores directories for now
 			continue
 		with file.open() as f:
-			snippets['/'.join(chain(file.parts[1:-1], (file.stem,)))] = Snippet(f.read())
+			snippets[path_to_short_name(file)] = Snippet(f.read())
 	return {name: compile_file(snippets, name) for name in snippets.keys()}
 
 
@@ -132,6 +136,14 @@ def process_microcontroller(mc_hull: Path, compiled: dict[str, str]):
 		hull = hull[:match.start()] + required_snippet + hull[match.end():]
 	with (Path('generated_microcontrollers') / f'{mc_hull.stem}.xml').open('w') as f:
 		f.write(hull)
+
+
+def proces_properties() -> dict[str, str]:
+	properties: dict[str, str] = {}
+	for file in Path('properties').glob('**/*.property'):
+		with file.open() as f:
+			properties[path_to_short_name(file)] = f.read()
+	return properties
 
 
 def install():
@@ -181,6 +193,7 @@ def main():
 	do_install: bool = len(sys.argv) >= 2 and sys.argv[1] == 'install'
 	compiled: dict[str, str] = compile()
 	compiled['trusted_mode'] = (getenv('TRUSTED_MODE') or 'true').lower()
+	compiled.update(proces_properties())
 	assert compiled['trusted_mode'] in ('true', 'false'), 'Only true or false are possible settings for TRUSTED_MODE'
 	generated_microcontrollers_dir: Path = Path('generated_microcontrollers')
 	if not generated_microcontrollers_dir.is_dir():
