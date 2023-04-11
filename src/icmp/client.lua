@@ -31,5 +31,6 @@ function icmp_ping(packet, destination_address)
         end
     else
         icmp_client_state = 0
+        return -1
     end
 end
