@@ -8,8 +8,8 @@ address_cache = {}
 function arp_receive_packet(packet, direction)
     if packet.src_addr ~= broadcast_address then
         address_cache[packet.src_addr] = direction
-    elseif packet.proto == 1 and packet.src_port == 1 and address_cache[packet.data] == nil then
-        address_cache[packet.data] = -TIMEOUT
+    --elseif packet.proto == 1 and packet.src_port == 1 and address_cache[packet.data] == nil then
+    --    address_cache[packet.data] = -TIMEOUT
     end
 end
 

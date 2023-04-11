@@ -43,7 +43,7 @@ function get_address(packet, address)
             proto = 1,
             ttl = 63,
             data = dhcp_last_address
-        }, 0)
+        }, 1)
     elseif dhcp_state >= 1 and dhcp_state < TIMEOUT then
         if packet.ttl > 0 and packet.proto == 1 and packet.src_addr == dhcp_last_address and packet.src_port == 2 then
             get_new_address(address ~= nil)
