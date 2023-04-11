@@ -262,7 +262,10 @@ def main():
 	install_parser: argparse.ArgumentParser = subparsers.add_parser('install', help='build and install microcontrollers')
 	install_parser.add_argument('target', nargs='?', type=Path, help='update all microcontrollers in a saved vehicle')
 	args = parser.parse_args()
-	logging.basicConfig(format='%(asctime)s|%(levelname)s| %(message)s', datefmt='%Y-%m-%dT%H:%M:%S%z', level=args.loglevel)
+	logging.basicConfig(
+		format='%(asctime)s|%(levelname)s| %(message)s', datefmt='%Y-%m-%dT%H:%M:%S%z',
+		level=args.loglevel
+	)
 	load_dotenv()
 	if args.command in ('compile', 'install'):
 		compiled: dict[str, str] = compile_all()
