@@ -159,7 +159,11 @@ def proces_properties() -> dict[str, str]:
 			content: str = f.read()
 			if len(content) > 4096:
 				logging.warning(f'property {file.stem} is too long')
-			properties[path_to_short_name(file)] = content
+			if content.find('\n') != -1:
+				logging.warning(f'removing newlines in property {file.stem}')
+			if not file.stem.startswith('_'):
+				logging.warning(f"property name {file.stem} doesn't start with a _. It might be ignored by the update function")
+			properties[path_to_short_name(file)] = content.replace('\n', '')
 	return properties
 
 
