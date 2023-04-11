@@ -38,7 +38,7 @@ function onTick()
     if packet ~= nil then
         if packet.proto == 1 then
             respond_to_arp(packet)
-        elseif packet.proto == 3 then
+        elseif packet.proto == 3 and packet.src_port == 1 then
             respond_to_icmp(packet)
         else
             to_channels(packet, 1)

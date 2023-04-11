@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="ping_client" description="No description set." width="2" length="2" id_counter="32" id_counter_node="4" sym8="2370" sym9="2370" sym10="3394" sym11="3406" sym12="2898" sym13="2898" sym14="2382">
+	<nodes>
+		<n id="1" component_id="3">
+			<node label="from router" mode="1" type="5" description="The input signal to be processed."/>
+		</n>
+		<n id="2" component_id="5">
+			<node label="to router" type="5" description="The input signal to be processed.">
+				<position x="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="20">
+			<node label="from screen" mode="1" type="5" description="The input signal to be processed.">
+				<position z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="22">
+			<node label="to screen" type="6" description="The input signal to be processed.">
+				<position x="1" z="1"/>
+			</node>
+		</n>
+	</nodes>
+	<group>
+		<data>
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="6" script="{{nic}}">
+					<pos x="2.75" y="-0.25"/>
+					<in1 component_id="7"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="7" count="8" offset="8">
+					<pos x="1.5" y="-2"/>
+					<inc component_id="23"/>
+					<in1 component_id="8"/>
+					<in2 component_id="9"/>
+					<in3 component_id="10"/>
+					<in4 component_id="11"/>
+					<in5 component_id="12"/>
+					<in6 component_id="13"/>
+					<in7 component_id="14"/>
+					<in8 component_id="15"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="8">
+					<pos x="0.25" y="-0.25"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="9" i="1">
+					<pos x="0.25" y="-0.5"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="10" i="2">
+					<pos x="0.25" y="-0.75"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="11" i="3">
+					<pos x="0.25" y="-1"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="12" i="4">
+					<pos x="0.25" y="-1.25"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="13" i="5">
+					<pos x="0.25" y="-1.5"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="14" i="6">
+					<pos x="0.25" y="-1.75"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="15" i="7">
+					<pos x="0.25" y="-2"/>
+					<in1 component_id="3"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="17" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end
+">
+					<pos x="4" y="-0.25"/>
+					<in1 component_id="6"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="23" script="{{client_mcs/ping_client}}">
+					<pos x="2.75" y="1"/>
+					<in1 component_id="24"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="24" count="1" offset="17">
+					<pos x="1.5" y="1"/>
+					<inc component_id="25"/>
+					<in1 component_id="31"/>
+				</object>
+			</c>
+			<c type="41">
+				<object id="25" count="3" offset="8">
+					<pos x="0.25" y="0.5"/>
+					<inc component_id="6"/>
+					<in1 component_id="26"/>
+					<in2 component_id="27"/>
+					<in3 component_id="28"/>
+				</object>
+			</c>
+			<c type="28">
+				<object id="26">
+					<pos x="-1" y="1"/>
+					<in1 component_id="30"/>
+				</object>
+			</c>
+			<c type="28">
+				<object id="27">
+					<pos x="-1" y="0.75"/>
+					<in1 component_id="29"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="28" i="10">
+					<pos x="-2.25" y="0.5"/>
+					<in1 component_id="32"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="29" i="9">
+					<pos x="-2.25" y="0.75"/>
+					<in1 component_id="32"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="30" i="8">
+					<pos x="-2.25" y="1"/>
+					<in1 component_id="32"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="31" i="17">
+					<pos x="0.25" y="1.75"/>
+					<in1 component_id="32"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="32" script="{{client_mcs/ping_client_button_mc}}">
+					<pos x="-3.5" y="1.25"/>
+					<in1 component_id="20"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="4">
+				<object id="3">
+					<pos x="-1" y="-0.25"/>
+				</object>
+			</c>
+			<c type="5">
+				<object id="5">
+					<pos x="5.25"/>
+					<in1 component_id="17"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="20">
+					<pos x="-4.75" y="1.5"/>
+				</object>
+			</c>
+			<c type="7">
+				<object id="22">
+					<pos x="4" y="1"/>
+					<in1 component_id="23" node_index="1"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="6" script="{{nic}}">
+				<pos x="2.75" y="-0.25"/>
+				<in1 component_id="7"/>
+			</c0>
+			<c1 id="7" count="8" offset="8">
+				<pos x="1.5" y="-2"/>
+				<inc component_id="23"/>
+				<in1 component_id="8"/>
+				<in2 component_id="9"/>
+				<in3 component_id="10"/>
+				<in4 component_id="11"/>
+				<in5 component_id="12"/>
+				<in6 component_id="13"/>
+				<in7 component_id="14"/>
+				<in8 component_id="15"/>
+			</c1>
+			<c2 id="8">
+				<pos x="0.25" y="-0.25"/>
+				<in1 component_id="3"/>
+			</c2>
+			<c3 id="9" i="1">
+				<pos x="0.25" y="-0.5"/>
+				<in1 component_id="3"/>
+			</c3>
+			<c4 id="10" i="2">
+				<pos x="0.25" y="-0.75"/>
+				<in1 component_id="3"/>
+			</c4>
+			<c5 id="11" i="3">
+				<pos x="0.25" y="-1"/>
+				<in1 component_id="3"/>
+			</c5>
+			<c6 id="12" i="4">
+				<pos x="0.25" y="-1.25"/>
+				<in1 component_id="3"/>
+			</c6>
+			<c7 id="13" i="5">
+				<pos x="0.25" y="-1.5"/>
+				<in1 component_id="3"/>
+			</c7>
+			<c8 id="14" i="6">
+				<pos x="0.25" y="-1.75"/>
+				<in1 component_id="3"/>
+			</c8>
+			<c9 id="15" i="7">
+				<pos x="0.25" y="-2"/>
+				<in1 component_id="3"/>
+			</c9>
+			<c10 id="17" script="gn=input.getNumber;sn=output.setNumber
+
+function onTick()
+	sn(1,gn(9))
+	sn(2,gn(10))
+	sn(3,gn(11))
+	sn(4,gn(12))
+	sn(5,gn(13))
+	sn(6,gn(14))
+	sn(7,gn(15))
+	sn(8,gn(16))
+end
+">
+				<pos x="4" y="-0.25"/>
+				<in1 component_id="6"/>
+			</c10>
+			<c11 id="23" script="{{client_mcs/ping_client}}">
+				<pos x="2.75" y="1"/>
+				<in1 component_id="24"/>
+			</c11>
+			<c12 id="24" count="1" offset="17">
+				<pos x="1.5" y="1"/>
+				<inc component_id="25"/>
+				<in1 component_id="31"/>
+			</c12>
+			<c13 id="25" count="3" offset="8">
+				<pos x="0.25" y="0.5"/>
+				<inc component_id="6"/>
+				<in1 component_id="26"/>
+				<in2 component_id="27"/>
+				<in3 component_id="28"/>
+			</c13>
+			<c14 id="26">
+				<pos x="-1" y="1"/>
+				<in1 component_id="30"/>
+			</c14>
+			<c15 id="27">
+				<pos x="-1" y="0.75"/>
+				<in1 component_id="29"/>
+			</c15>
+			<c16 id="28" i="10">
+				<pos x="-2.25" y="0.5"/>
+				<in1 component_id="32"/>
+			</c16>
+			<c17 id="29" i="9">
+				<pos x="-2.25" y="0.75"/>
+				<in1 component_id="32"/>
+			</c17>
+			<c18 id="30" i="8">
+				<pos x="-2.25" y="1"/>
+				<in1 component_id="32"/>
+			</c18>
+			<c19 id="31" i="17">
+				<pos x="0.25" y="1.75"/>
+				<in1 component_id="32"/>
+			</c19>
+			<c20 id="32" script="{{client_mcs/ping_client_button_mc}}">
+				<pos x="-3.5" y="1.25"/>
+				<in1 component_id="20"/>
+			</c20>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="3">
+				<pos x="-1" y="-0.25"/>
+			</c0>
+			<c1 id="5">
+				<pos x="5.25"/>
+				<in1 component_id="17"/>
+			</c1>
+			<c2 id="20">
+				<pos x="-4.75" y="1.5"/>
+			</c2>
+			<c3 id="22">
+				<pos x="4" y="1"/>
+				<in1 component_id="23" node_index="1"/>
+			</c3>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
