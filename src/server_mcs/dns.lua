@@ -12,7 +12,10 @@ function onTick()
     local packet = to_packet(1)
     if packet.ttl > 0 then
         if packet.proto == 4 then
-            respond_to_dns(packet)
+            local response = respond_to_dns(packet)
+            if response ~= nil then
+                to_channels(response, 1)
+            end
         end
     end
 end
