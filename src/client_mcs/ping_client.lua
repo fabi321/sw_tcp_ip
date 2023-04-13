@@ -17,7 +17,7 @@ function onTick()
     sb(1, is_on)
     ping_active = gb(10)
     own_address = ADDRESS_FORMAT:format(gn(17))
-    ping_client_address = (("f"):pack(gn(18))):gsub(" ", "")
+    ping_client_address = (("f"):pack(gn(18))):gsub("\0", "")
     address_field_current_address = ping_client_address
     ping_client_set_address = gb(11)
     local packet = to_packet(1)
