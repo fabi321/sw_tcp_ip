@@ -21,7 +21,7 @@ function onTick()
     address_field_current_address = ping_client_address
     ping_client_set_address = gb(11)
     local packet = to_packet(1)
-    if ping_active then
+    if ping_active and #ping_client_address == 4 then
         local result = icmp_ping(packet, ping_client_address)
         if type(result) == "table" then
             to_channels(result, 1)
