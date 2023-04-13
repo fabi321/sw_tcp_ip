@@ -1,6 +1,7 @@
 require('util')
 require('packeting')
 require('packet_queue')
+require('dhcp_client')
 
 function onTick()
     for i=1,32 do
