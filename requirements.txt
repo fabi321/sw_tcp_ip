@@ -1,1 +1,2 @@
 python-dotenv
+sw_mc_lib

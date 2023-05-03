@@ -13,12 +13,11 @@ from datetime import datetime, timedelta
 from itertools import chain
 import argparse
 import logging
+from sw_mc_lib import parse, format, XMLParserElement
 
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/-]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/-]+)\}\}')
-SCRIPT_REGEX: re.Pattern = re.compile(r'script="([^"]*)"')
-MC_REGEX: re.Pattern = re.compile(r'<microprocessor_definition name="([^"]*)".*?</microprocessor_definition>', re.DOTALL)
 NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z0-9_-]+)')
 
 FIELD_REPLACEMENTS: dict[str, str] = {
@@ -194,30 +193,33 @@ def install_globally():
 
 def install_in_file(file: Path):
 	logging.info(f'installing into file {file}')
-	mcs: dict[str, str] = {}
+	mcs: dict[str, XMLParserElement] = {}
 	for mc in Path('generated_microcontrollers').glob('*.xml'):
 		logging.debug(f'reading microcontroller {mc}')
 		with mc.open() as f:
 			file_content = f.read()
-		name = re.search(r'<microprocessor name="([^"]*)"', file_content).group(1)
-		file_content = re.sub(r'<(/?)microprocessor([^>]*)>', r'<\1microprocessor_definition\2>', file_content)
-		file_content = file_content.replace('<?xml version="1.0" encoding="UTF-8"?>', '')
-		file_content = file_content.replace('\n', ' ').replace('\t', '')
-		mcs[name] = file_content
+		file_xml: XMLParserElement = parse(file_content)
+		file_xml.tag = 'microprocessor_definition'
+		mcs[file_xml.attributes.get('name', '')] = file_xml
 	logging.debug('reading vehicle file')
 	with file.open() as f:
 		vehicle = f.read()
-	start: int = 0
-	while match := MC_REGEX.search(vehicle, start):
-		logging.debug(f'found microcontroller {match.group(1)}')
-		start = match.start() + 10
-		name = match.group(1)
-		if name in mcs:
-			logging.debug('replacing microcontroller with updated variant')
-			vehicle = vehicle[:match.start()] + mcs[name] + vehicle[match.end():]
+	vehicle_xml: XMLParserElement = parse(vehicle)
+	bodies: XMLParserElement = vehicle_xml.children[1]
+	assert bodies.tag == 'bodies'
+	for body in bodies.children:
+		for component in body.children:
+			if component.attributes.get('d') == 'microprocessor':
+				mc_def = component.children[0].children[0]
+				assert mc_def.tag == 'microprocessor_definition'
+				name: str = mc_def.attributes.get('name', '')
+				logging.debug(f'found microcontroller {name}')
+				if name in mcs:
+					logging.debug('replacing microcontroller with updated variant')
+					mc_def.children[0].children[0] = mcs[name]
 	logging.debug('writing vehicle file')
 	with file.open('w') as f:
-		f.write(vehicle)
+		f.write(format(vehicle_xml, None, True))
 
 
 def compile_all() -> dict[str, str]:
