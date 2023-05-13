@@ -52,7 +52,7 @@ function bip_39_keyboard_on_tick(pressX, pressY)
         bip_39_candidate_words, bip_39_valid_characters = get_candidate_words(bip_39_current_word)
     elseif #bip_39_previous_words < 6 then
         for _, row in ipairs(bip_39_keyboard_layout) do
-            for i=1,#row do
+            for i = 1, #row do
                 bip_39_valid_characters[row:sub(i, i)] = true
             end
             bip_39_valid_characters[" "] = false
@@ -85,7 +85,7 @@ function bip_39_keyboard_on_tick(pressX, pressY)
     end
     if #bip_39_candidate_words > 5 or #bip_39_candidate_words == 0 then
         for i, row in ipairs(bip_39_keyboard_layout) do
-            for j=1,#row do
+            for j = 1, #row do
                 ---@type number, number, string
                 local posX, posY, key = j * 8, i * 6 + 24, row:sub(j, j)
                 if key ~= "<" then
@@ -117,11 +117,11 @@ function bip_39_keyboard_on_tick(pressX, pressY)
     return nil
 end
 
----@param title
+---@param title string
 function bip_39_keyboard_on_draw(title)
-    setColor(0,0,0)
+    setColor(0, 0, 0)
     screen.drawClear()
-    setColor(100,100,100)
+    setColor(100, 100, 100)
     screen.drawTextBox(0, 0, 96, 6, title, 0, 0)
     for i, word in ipairs(bip_39_previous_words) do
         bip_39_draw_word(i + 1, word)
@@ -137,7 +137,7 @@ function bip_39_keyboard_on_draw(title)
         end
     else
         for i, row in ipairs(bip_39_keyboard_layout) do
-            for j=1,#row do
+            for j = 1, #row do
                 ---@type number, number, string
                 local posX, posY, key = j * 8, i * 6 + 24, row:sub(j, j)
                 if key ~= "<" then

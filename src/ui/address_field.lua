@@ -16,9 +16,9 @@ function address_field_iterate_over_keys(to_execute)
     ---@type boolean
     local result = false
     for i, row in ipairs(address_field_keyboard_layout) do
-        for j=1,#row do
+        for j = 1, #row do
             local posX, posY, w, h, key, highlighted = j * 8, i * 6 + 6, 7, 5, row:sub(j, j), false
-            if key == "<"then
+            if key == "<" then
                 w = 15
                 key = "<-"
                 highlighted = #address_field_current_address > 0
@@ -53,6 +53,7 @@ function address_field_press_key(posX, posY, w, h, key, highlighted)
             address_field_current_address = address_field_current_address .. key
         end
     end
+    return false
 end
 
 ---@param pressX number
@@ -94,7 +95,7 @@ end
 
 ---@param title string
 function address_field_on_draw(title)
-    setColor(0,0,0)
+    setColor(0, 0, 0)
     screen.drawRectF(0, 0, 96, 30)
     setColor(100, 100, 100)
     screen.drawTextBox(0, 0, 96, 6, title, 0)

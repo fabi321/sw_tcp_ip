@@ -20,7 +20,7 @@ xorshift = {
         return answer
     end,
     skip = function(self)
-        for i=1,10 do
+        for i = 1, 10 do
             self:next_int()
         end
     end

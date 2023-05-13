@@ -2,7 +2,7 @@ require('util')
 require('arp/router')
 require('packeting')
 
----@type table<number, {retry_time: number, retry_count: number, packet: Packet, destination: number}
+---@type table<number, {retry_time: number, retry_count: number, packet: Packet, destination: number}>
 packet_queue = {}
 ---@type table<string, {retry_time: number, retry_count: number}>
 arp_lookup = {}
@@ -62,7 +62,7 @@ function receive_packet(packet, direction)
         }
         newest_packet = newest_packet + 1
     else
-        for i=1,largest_interface_id do
+        for i = 1, largest_interface_id do
             if i ~= direction or i == 1 and is_wifi then
                 packet_queue[newest_packet] = {
                     retry_time = 0,
@@ -81,7 +81,7 @@ function receive_packet(packet, direction)
                     and p.packet.src_addr == packet.dest_addr
                     and p.packet.seq_nmb == packet.ack_nmb
                     and p.packet.proto == 2
-            ) then
+                ) then
                 packet_queue[k] = nil
             end
         end
