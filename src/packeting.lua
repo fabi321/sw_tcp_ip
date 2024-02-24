@@ -88,7 +88,7 @@ function to_channels(packet, start_channel, encrypted)
             .. int_to_byte(packet.ttl, 1)
             .. int_to_byte(#packet.data, 1)
             .. "\0"
-            .. (packet.data .. "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"):sub(1, 20)
+            .. (packet.data .. ("\0"):rep(20)):sub(1, 20)
     )
     ---@type number[]
     local numbers = {}
