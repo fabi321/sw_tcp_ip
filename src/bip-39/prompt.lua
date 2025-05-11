@@ -119,9 +119,9 @@ end
 
 ---@param title string
 function bip_39_keyboard_on_draw(title)
-    setColor(0, 0, 0)
+    screen.setColor(0, 0, 0)
     screen.drawClear()
-    setColor(100, 100, 100)
+    screen.setColor(100, 100, 100)
     screen.drawTextBox(0, 0, 96, 6, title, 0, 0)
     for i, word in ipairs(bip_39_previous_words) do
         bip_39_draw_word(i + 1, word)
@@ -129,7 +129,7 @@ function bip_39_keyboard_on_draw(title)
     bip_39_draw_word(#bip_39_previous_words + 2, bip_39_current_word)
     screen.drawRectF(0, 25, 96, 3)
     if #bip_39_previous_words == 6 then
-        setColor(100, 100, 100)
+        screen.setColor(100, 100, 100)
         screen.drawTextBox(0, 30, 96, 18, bio_39_is_valid and "valid entry" or "invalid entry", 0, 0)
     elseif #bip_39_candidate_words <= 5 and #bip_39_candidate_words > 0 then
         for i, word in ipairs(bip_39_candidate_words) do
@@ -142,19 +142,19 @@ function bip_39_keyboard_on_draw(title)
                 local posX, posY, key = j * 8, i * 6 + 24, row:sub(j, j)
                 if key ~= "<" then
                     if bip_39_valid_characters[key] then
-                        setColor(10, 10, 10)
+                        screen.setColor(10, 10, 10)
                         screen.drawRectF(posX, posY, 7, 5)
-                        setColor(100, 100, 100)
+                        screen.setColor(100, 100, 100)
                     else
-                        setColor(10, 10, 10)
+                        screen.setColor(10, 10, 10)
                     end
                     screen.drawTextBox(posX, posY, 7, 5, key, 0)
                 end
             end
         end
     end
-    setColor(10, 10, 10)
+    screen.setColor(10, 10, 10)
     screen.drawRectF(64, 42, 23, 5)
-    setColor(100, 100, 100)
+    screen.setColor(100, 100, 100)
     screen.drawTextBox(64, 42, 23, 5, "<-", 0)
 end

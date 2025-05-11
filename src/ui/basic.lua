@@ -1,6 +1,3 @@
-s=screen
-setColor=s.setColor
-
 ---@class Placement
 ---@field x number
 ---@field y number
@@ -10,21 +7,21 @@ setColor=s.setColor
 ---@param placement Placement
 ---@param text string
 function drawTextBox(placement, text)
-    s.drawTextBox(placement.x, placement.y, placement.w + 1, placement.h, text, 0, 0)
+    screen.drawTextBox(placement.x, placement.y, placement.w + 1, placement.h, text, 0, 0)
 end
 
 ---@param placement Placement
 function drawRect(placement)
-    s.drawRect(placement.x, placement.y, placement.w, placement.h)
+    screen.drawRect(placement.x, placement.y, placement.w, placement.h)
 end
 
 ---@param placement Placement
 function drawRectFilled(placement)
-    s.drawRectF(placement.x, placement.y, placement.w, placement.h)
+    screen.drawRectF(placement.x, placement.y, placement.w, placement.h)
 end
 
 function setDefaultColor()
-    setColor(100, 100, 100)
+    screen.setColor(100, 100, 100)
 end
 
 ---@param px number
@@ -51,9 +48,9 @@ end
 ---@param is_pressed boolean
 function drawButton(placement, text, is_pressed)
     if is_pressed then
-        setColor(50, 50, 50)
+        screen.setColor(50, 50, 50)
     else
-        setColor(10, 10, 10)
+        screen.setColor(10, 10, 10)
     end
     drawRectFilled(placement)
     setDefaultColor()

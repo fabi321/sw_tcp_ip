@@ -7,17 +7,18 @@ require('arp/server')
 
 largest_interface_id = 2
 
+-- tumfl: preserve
 function onTick()
     for i=1,16 do
-        sn(i, 0)
+        output.setNumber(i, 0)
     end
     local packet = to_packet(9)
     if dhcp_state < TIMEOUT + 1 then
-        if gb(1) then
+        if input.getBool(1) then
             ---@type string | nil
             local preferred_address = nil
-            if gn(17) ~= 65535 then
-                preferred_address = ADDRESS_FORMAT:format(gn(17))
+            if input.getNumber(17) ~= 65535 then
+                preferred_address = ADDRESS_FORMAT:format(input.getNumber(17))
             end
             get_address(packet, preferred_address)
         end
@@ -48,6 +49,6 @@ function onTick()
     if packet ~= nil then
         to_channels(packet, 9)
     end
-    sn(17, tonumber(dhcp_last_address, 16))
-    sb(1, dhcp_state == TIMEOUT + 1)
+    output.setNumber(17, tonumber(dhcp_last_address, 16))
+    output.setBool(1, dhcp_state == TIMEOUT + 1)
 end

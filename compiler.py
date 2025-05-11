@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-from subprocess import Popen, PIPE
 from dotenv import load_dotenv
 from os import getenv
 import re
@@ -14,6 +13,9 @@ from itertools import chain
 import argparse
 import logging
 from sw_mc_lib import parse, format, XMLParserElement
+
+from tumfl import resolve_recursive, minify, format as format_ast
+from tumfl.formatter import MinifiedStyle
 
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/-]+)["']\)''')
@@ -37,26 +39,6 @@ FIELD_REPLACEMENTS: dict[str, str] = {
 }
 
 
-class Snippet:
-	def __init__(self, content: str):
-		self.content: str = content
-		self.dependencies: set = set(REQUIRE_REGEX.findall(self.content))
-
-
-def minify(text: str) -> str:
-	def replace(match: re.Match) -> str:
-		return FIELD_REPLACEMENTS.get(match.group(1), match.group(1))
-
-	text = NAME_REGEX.sub(replace, text)
-	
-	process: Popen = Popen(['lua5.4', 'minify.lua', 'minify', '-'], stdin=PIPE, stderr=PIPE, stdout=PIPE)
-	result = process.communicate(text.encode())
-	if result[1]:
-		print(result[1].decode())
-		raise ValueError('Broken code')
-	return result[0].decode()
-
-
 def escape(text: str) -> str:
 	return text\
 		.replace('&', '&amp;')\
@@ -64,57 +46,29 @@ def escape(text: str) -> str:
 		.replace("'", '&apos;')
 
 
-def get_mro(snippets: dict[str, Snippet], name: str) -> list[str]:
-	visited = set()
-	mro = []
+def write_ast(ast, dir: str, name: Path):
+	target: Path = Path(dir) / name
+	target.parent.mkdir(exist_ok=True, parents=True)
+	with target.open('w') as f:
+		f.write(format_ast(ast))
 
-	def dfs(current_name):
-		visited.add(current_name)
-		snippet = snippets[current_name]
-
-		for dep_name in snippet.dependencies:
-			if dep_name not in visited:
-				dfs(dep_name)
-
-		mro.append(current_name)
-
-	dfs(name)
-	return mro
-
-
-def merge_snippets(snippets: dict[str, Snippet], name: str) -> str:
-	# compute MRO
-	mro = get_mro(snippets, name)
-
-	# merge snippets in MRO order
-	merged_content = ""
-	merged_deps = set()
-	for current_name in mro:
-		snippet = snippets[current_name]
-		for dep_name in snippet.dependencies:
-			replace_with: str = ''
-			if dep_name not in merged_deps:
-				replace_with = snippets[dep_name].content
-				merged_deps.add(dep_name)
-			merged_content = re.sub(f'require\\(["\']{dep_name}["\']\\)', replace_with, merged_content)
-		merged_content += snippet.content
-
-	logging.debug(f'mro for snippet {name}: {mro}')
-
-	# replace remaining dependencies with empty string
-	for dep_name in merged_deps:
-		merged_content = re.sub(f'require\\(["\']{dep_name}["\']\\)', '', merged_content)
-
-	return merged_content
-
-
-def compile_file(snippets: dict[str, Snippet], name: str) -> str:
+def compile_file(name: Path) -> str:
 	logging.debug(f'merging snippets of {name}')
-	text: str = merge_snippets(snippets, name)
+	ast = resolve_recursive(name, [name.parent, Path('src')])
+	write_ast(ast, 'generated_ast', name)
+
 	logging.debug(f'minifying {name}')
-	text = minify(text)
+	minify(ast)
+	write_ast(ast, 'minified_ast', name)
+	text: str = format_ast(ast, MinifiedStyle)
+	def replace(match: re.Match) -> str:
+		return FIELD_REPLACEMENTS.get(match.group(1), match.group(1))
+
+	text = NAME_REGEX.sub(replace, text)
+
 	if len(text) > 4096:
 		logging.warning(f'script {name} is too long')
+
 	text = escape(text)
 	return text
 
@@ -124,15 +78,8 @@ def path_to_short_name(path: Path) -> str:
 
 
 def compile_lua_files() -> dict[str, str]:
-	snippets: dict[str, Snippet] = {}
-	for file in Path('src').glob("**/*.lua"):
-		if not file.is_file():
-			# Ignores directories for now
-			continue
-		with file.open() as f:
-			logging.debug(f'reading snippet {file}')
-			snippets[path_to_short_name(file)] = Snippet(f.read())
-	return {name: compile_file(snippets, name) for name in snippets.keys()}
+	files: list[Path] = list(Path('src').glob("**/*.lua"))
+	return {path_to_short_name(name): compile_file(name) for name in files}
 
 
 def process_microcontroller(mc_hull: Path, compiled: dict[str, str]):
@@ -208,15 +155,18 @@ def install_in_file(file: Path):
 	bodies: XMLParserElement = vehicle_xml.children[1]
 	assert bodies.tag == 'bodies'
 	for body in bodies.children:
-		for component in body.children:
-			if component.attributes.get('d') == 'microprocessor':
-				mc_def = component.children[0].children[0]
-				assert mc_def.tag == 'microprocessor_definition'
-				name: str = mc_def.attributes.get('name', '')
-				logging.debug(f'found microcontroller {name}')
-				if name in mcs:
-					logging.debug('replacing microcontroller with updated variant')
-					mc_def.children[0].children[0] = mcs[name]
+		assert body.tag == 'body'
+		for components in body.children:
+			assert components.tag == 'components'
+			for component in components.children:
+				if component.attributes.get('d') == 'microprocessor':
+					mc_def = component.children[0].children[0]
+					assert mc_def.tag == 'microprocessor_definition'
+					name: str = mc_def.attributes.get('name', '')
+					logging.debug(f'found microcontroller {name}')
+					if name in mcs:
+						logging.debug('replacing microcontroller with updated variant')
+						component.children[0].children[0] = mcs[name]
 	logging.debug('writing vehicle file')
 	with file.open('w') as f:
 		f.write(format(vehicle_xml, None, True))
@@ -260,7 +210,7 @@ def main():
 		action="store_const", dest="loglevel", const=logging.INFO,
 	)
 	subparsers = parser.add_subparsers(dest='command', required=True)
-	build_parser: argparse.ArgumentParser = subparsers.add_parser('build', help='build microcontrollers')
+	subparsers.add_parser('build', help='build microcontrollers')
 	install_parser: argparse.ArgumentParser = subparsers.add_parser('install', help='build and install microcontrollers')
 	install_parser.add_argument('target', nargs='?', type=Path, help='update all microcontrollers in a saved vehicle')
 	args = parser.parse_args()
@@ -269,7 +219,7 @@ def main():
 		level=args.loglevel
 	)
 	load_dotenv()
-	if args.command in ('compile', 'install'):
+	if args.command in ('build', 'install'):
 		compiled: dict[str, str] = compile_all()
 		install_locally(compiled)
 	if args.command == 'install':

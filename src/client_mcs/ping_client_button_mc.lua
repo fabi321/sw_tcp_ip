@@ -6,17 +6,18 @@ require('client_mcs/ping_client_buttons')
 ---@type boolean
 ping_client_set_address = false
 
+-- tunfl preserve
 function onTick()
-    isPress1 = gb(1)
-    isPress2 = gb(2)
+    isPress1 = input.getBool(1)
+    isPress2 = input.getBool(2)
 
-    input1X = gn(3)
-    input1Y = gn(4)
-    input2X = gn(5)
-    input2Y = gn(6)
+    input1X = input.getNumber(3)
+    input1Y = input.getNumber(4)
+    input2X = input.getNumber(5)
+    input2Y = input.getNumber(6)
 
     for i=1,32 do
-        sb(i, false)
+        output.setBool(i, false)
     end
 
     if ping_client_set_address then
@@ -33,9 +34,9 @@ function onTick()
         if tick_result ~= nil then
             ping_client_set_address = false
         else
-            sb(11, true)
+            output.setBool(11, true)
         end
-        sn(18, (("f"):unpack(address_field_current_address.."    ")))
+        output.setNumber(18, (("f"):unpack(address_field_current_address.."    ")))
     else
         Button(on_button, 9)
         Button(ping_button, 10)

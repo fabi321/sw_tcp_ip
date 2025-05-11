@@ -1,14 +1,12 @@
-getText = property.getText
-
 ---@type table<number>
 blowfish_p = {}
 ---@type table<number, table<number, number>>
 blowfish_s = {}
-blowfish_p_text = getText("_blowfish_p")
-blowfish_s_0_text = getText("_blowfish_s_0")
-blowfish_s_1_text = getText("_blowfish_s_1")
-blowfish_s_2_text = getText("_blowfish_s_2")
-blowfish_s_3_text = getText("_blowfish_s_3")
+blowfish_p_text = property.getText("_blowfish_p")
+blowfish_s_0_text = property.getText("_blowfish_s_0")
+blowfish_s_1_text = property.getText("_blowfish_s_1")
+blowfish_s_2_text = property.getText("_blowfish_s_2")
+blowfish_s_3_text = property.getText("_blowfish_s_3")
 
 --- Create an array based on a string of hexadecimal numbers. resulting array is zero based
 ---@param input string

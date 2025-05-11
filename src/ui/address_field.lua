@@ -44,7 +44,7 @@ end
 ---@return boolean
 function address_field_press_key(posX, posY, w, h, key, highlighted)
     if highlighted and is_in_rect(address_field_press_x, address_field_press_y, posX, posY, w, h) then
-        sn(1, (key:byte(1, 1)))
+        output.setNumber(1, (key:byte(1, 1)))
         if key == "->" then
             return true
         elseif key == "<-" then
@@ -83,11 +83,11 @@ end
 ---@return boolean
 function address_field_draw_key(posX, posY, w, h, key, highlighted)
     if highlighted then
-        setColor(10, 10, 10)
+        screen.setColor(10, 10, 10)
         screen.drawRectF(posX, posY, w, h)
-        setColor(100, 100, 100)
+        screen.setColor(100, 100, 100)
     else
-        setColor(10, 10, 10)
+        screen.setColor(10, 10, 10)
     end
     screen.drawTextBox(posX, posY, w, h, key, 0, 0)
     return false
@@ -95,9 +95,9 @@ end
 
 ---@param title string
 function address_field_on_draw(title)
-    setColor(0, 0, 0)
+    screen.setColor(0, 0, 0)
     screen.drawRectF(0, 0, 96, 30)
-    setColor(100, 100, 100)
+    screen.setColor(100, 100, 100)
     screen.drawTextBox(0, 0, 96, 6, title, 0)
     screen.drawText(0, 6, address_field_current_address)
     address_field_iterate_over_keys(address_field_draw_key)

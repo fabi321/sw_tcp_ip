@@ -24,11 +24,12 @@ secret = -1
 is_wifi = true
 largest_interface_id = 2
 
+-- tumfl: preserve
 function onTick()
     for i=1,32 do
-        sn(i, 0)
+        output.setNumber(i, 0)
     end
-    rand_source = gn(17)
+    rand_source = input.getNumber(17)
     if secret == -1 then
         if rand_source ~= 0 then
             xorshift:seed(f_to_i(rand_source))
@@ -53,10 +54,10 @@ function onTick()
         if router_packet ~= nil then
             to_channels(router_packet, 9)
         end
-        sn(17, tick)
-        sn(18, secret)
+        output.setNumber(17, tick)
+        output.setNumber(18, secret)
         freq_1, freq_2 = get_frequencies(tick, secret)
-        sn(20, freq_1)
-        sn(21, freq_2)
+        output.setNumber(20, freq_1)
+        output.setNumber(21, freq_2)
     end
 end

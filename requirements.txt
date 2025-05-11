@@ -1,2 +1,3 @@
 python-dotenv
 sw_mc_lib
+tumfl==0.3.4

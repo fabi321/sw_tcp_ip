@@ -8,18 +8,19 @@ require('client_mcs/ping_client_buttons')
 ---@type number[]
 ping_results = {}
 
+-- tumfl: preserve
 function onTick()
     for i=1,8 do
-        sn(i, 0)
+        output.setNumber(i, 0)
     end
-    sn(17, 65535)
-    is_on = gb(9)
-    sb(1, is_on)
-    ping_active = gb(10)
-    own_address = ADDRESS_FORMAT:format(gn(17))
-    ping_client_address = (("f"):pack(gn(18))):gsub("\0", "")
+    output.setNumber(17, 65535)
+    is_on = input.getBool(9)
+    output.setBool(1, is_on)
+    ping_active = input.getBool(10)
+    own_address = ADDRESS_FORMAT:format(input.getNumber(17))
+    ping_client_address = (("f"):pack(input.getNumber(18))):gsub("\0", "")
     address_field_current_address = ping_client_address
-    ping_client_set_address = gb(11)
+    ping_client_set_address = input.getBool(11)
     local packet = to_packet(1)
     if ping_active and #ping_client_address == 4 then
         local result = icmp_ping(packet, ping_client_address)
@@ -31,6 +32,7 @@ function onTick()
     end
 end
 
+-- tumfl: preserve
 function onDraw()
     drawTextBox(own_address_label, own_address)
     drawButton(on_button, "on", is_on)

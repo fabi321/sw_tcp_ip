@@ -1,5 +1,6 @@
 require('bip-39/prompt')
 
+-- tumfl: preserve
 function onTick()
     pressX = 0
     pressY = 0
@@ -17,6 +18,7 @@ function onTick()
     end
 end
 
+-- tumfl: preserve
 function onDraw()
     bip_39_keyboard_on_draw("enter wifi pw")
 end

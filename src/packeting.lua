@@ -28,7 +28,7 @@ function get_numbers(start_channel, encrypted)
     ---@type number[]
     local numbers = {}
     for i=1, 8 do
-        numbers[i] = (I4_FORMATTER:unpack((F_FORMATTER:pack(gn(start_channel + i - 1)))))
+        numbers[i] = (I4_FORMATTER:unpack((F_FORMATTER:pack(input.getNumber(start_channel + i - 1)))))
     end
     if encrypted then
         for i=1, 8, 2 do
@@ -48,7 +48,7 @@ function set_numbers(numbers, start_channel, encrypted)
         end
     end
     for i=1,8 do
-        sn(start_channel + i - 1, (F_FORMATTER:unpack((I4_FORMATTER:pack(numbers[i])))))
+        output.setNumber(start_channel + i - 1, (F_FORMATTER:unpack((I4_FORMATTER:pack(numbers[i])))))
     end
 end
 

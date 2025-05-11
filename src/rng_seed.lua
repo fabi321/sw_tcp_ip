@@ -1,5 +1,6 @@
 require('xorshift')
 
+-- tumfl: preserve
 function onTick()
     if input.getNumber(1) ~= 0 then
         ---@type number

@@ -3,9 +3,10 @@ require('packeting')
 require('packet_queue')
 require('dhcp_client')
 
+-- tumfl: preserve
 function onTick()
     for i=1,32 do
-        sn(i, 0)
+        output.setNumber(i, 0)
     end
     for i=1,4 do
         local packet = to_packet(i * 8 - 7)
