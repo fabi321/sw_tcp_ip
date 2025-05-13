@@ -20,7 +20,7 @@ from tumfl.formatter import MinifiedStyle
 
 REQUIRE_REGEX: re.Pattern = re.compile(r'''require\(["']([a-zA-Z0-9_/-]+)["']\)''')
 TEMPLATE_REGEX: re.Pattern = re.compile(r'\{\{([a-zA-Z0-9_/-]+)\}\}')
-NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z0-9_-]+)')
+NAME_REGEX: re.Pattern = re.compile(r'([a-zA-Z][a-zA-Z0-9_]*)')
 
 FIELD_REPLACEMENTS: dict[str, str] = {
 	'src_addr': 'a',
