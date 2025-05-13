@@ -6,7 +6,7 @@ require('client_mcs/ping_client_buttons')
 ---@type boolean
 ping_client_set_address = false
 
--- tunfl preserve
+-- tumfl preserve
 function onTick()
     isPress1 = input.getBool(1)
     isPress2 = input.getBool(2)
@@ -21,8 +21,7 @@ function onTick()
     end
 
     if ping_client_set_address then
-        pressX = 0
-        pressY = 0
+        local pressX, pressY = 0, 0
         if isPress1 then
             pressX = input1X
             pressY = input1Y
